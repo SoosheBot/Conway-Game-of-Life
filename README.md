@@ -1,12 +1,11 @@
 # Cellular Automata and Conway's "Game of Life"
 Welcome to John Conway's "Game of Life"! This is a computer science classic from 1970, a program that simulates a cellular automaton (plural automata). It has connections to all kinds of different aspects of computer science and nature
 
-*Visit the live project here:*  
+*Visit the live project here:* https://conway-life-game.herokuapp.com/
 
 
 ## What is it?
 This isn't a typical interactive computer game. Conway's "Game of Life" is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input from a player. One interacts with the Game of Life by creating an initial configuration (pattern) and observing how it evolves, or, for advanced “players”, by creating patterns with particular properties
-
 
 ## How does it work?
 (From Wikipedia): 
@@ -54,6 +53,17 @@ The initial pattern constitutes the 'seed' of the system. The first generation i
 * Javascript
 * Canvas
 * HTML/CSS
-* Deployed with: Heroku
+* Heroku
+
+
+## Quick Start -- React App + Heroku (Mac)
+```
+1. Create App: npx create-react-app $APP_NAME (replace $APP_NAME with your app's name)
+2. Enter App Directory: cd $APP_NAME
+3. Login to Heroku: heroku login
+4. Create Heroku App: heroku create $APP_NAME --buildpack mars/create-react-app (replace $APP_NAME with your app's name)
+4. Deploy: git push heroku master
+5. Open: heroku open
+```
 
 
