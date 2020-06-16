@@ -18,9 +18,34 @@ Every cell interacts with its eight neighbours, which are the cells that are dir
 * Any dead cell with exactly three live neighbours will come to life.
 
 The initial pattern constitutes the 'seed' of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed — births and deaths happen simultaneously, and the discrete moment at which this happens is sometimes called a tick. (In other words, each generation is a pure function of the one before.) The rules continue to be applied repeatedly to create further generations.
+
+
 ## Tasks
-- [ ]
-- [ ]
+### Basic project features
+- [ ] Display includes a text area that shows the current generation of cells being displayed
+- [ ] Display includes a grid of cells, at least 25x25, that can be toggled to be alive or dead
+- [ ] Display includes working buttons that start / stop the animation and clear the grid
+- [ ] Algorithm to generate new generations of cells correctly implemented
+- [ ] At least 3 features from Custom Features section successfully implemented
+- [ ] Application includes a section outlining the rules to Conway's "Game of Life"
+
+### Custom features (Implement at least 3)
+- [ ] Create a few sample cell configurations that users can load and run
+- [ ] Add an option that creates a random cell configuration that users can run
+- [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
+- [ ] Allow users to specify the speed of the simulation
+- [ ] Provide functionality to manually step through the simulation one generation at a time, as opposed to animating automatically
+- [ ] Allow users to change the dimension of the grid being displayed
+- [ ] Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation (i.e. skip ahead n generations).
+
+### Stretch
+- [ ] Implement 2+ additional custom features, above
+- [ ] Deploy your app to a hosting service or, for iOS, to TestFlight (or the App Store!). Web devs can see more deployment info here.
+- [ ] Write a how-to guide or blog post that walks readers through the work you did to implement your project
+- [ ] Expand your simulation into the third dimension. Google 3D Conways Life. Google for how to do 3D stuff on your platform. Web users might check out 3D-ThreeJS, and iOS might look at SceneKit.
+- [ ] Explore alternate algorithms for finding the nth generation, such as Hashlife
+
+
 ## Tools
 * NodeJS
 * React
