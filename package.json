@@ -1,0 +1,23 @@
+{
+  "name": "conway-game-of-life",
+  "version": "1.0.0",
+  "description": "Welcome to John Conway's \"Game of Life\"! This is a computer science classic from 1970, a program that simulates a cellular automaton (plural automata). It has connections to all kinds of different aspects of computer science and nature. ## What is it? This isn't a typical interactive computer game. Conway's \"Game of Life\" is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input from a player. One interacts with the Game of Life by creating an initial configuration (pattern) and observing how it evolves, or, for advanced “players”, by creating patterns with particular properties.  ## How does it work? (From Wikipedia) The universe of the Game of Life is an infinite two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead. Every cell interacts with its eight neighbours, which are the cells that are directly horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoosheBot/Conway-Game-of-Life.git"
+  },
+  "keywords": [],
+  "author": "Susheela Bhat Harkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoosheBot/Conway-Game-of-Life/issues"
+  },
+  "homepage": "https://github.com/SoosheBot/Conway-Game-of-Life#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
