@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h4>Nav</h4>
+        {/* <h4>Nav</h4> */}
       </header>
       <Game />
     </div>
