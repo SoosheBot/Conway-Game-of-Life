@@ -1,14 +1,13 @@
 import React from 'react';
 import './App.css';
-import Game from './components/Game';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <h4>Nav</h4> */}
+        <Nav />
       </header>
-      <Game />
     </div>
   );
 }
