@@ -37,7 +37,7 @@ const Grid = () => {
     }
     return griddy;
   };
-  
+
   //store whether we started the game or not in state. the default is false--not running
   const [running, setRunning] = useState(false);
   //set a running ref so you aren't running the run simulation once, espec since the run state is going to change
@@ -127,9 +127,9 @@ const Grid = () => {
       {/* display a random number of filled cells */}
       <button
         onClick={() => {
-          const rowsRandom = [];
-          for (let i = 0; i < rowsRandom; i++) {
-            rowsRandom.push(
+          const rows = [];
+          for (let i = 0; i < rows; i++) {
+            rows.push(
               Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
             );
           }
