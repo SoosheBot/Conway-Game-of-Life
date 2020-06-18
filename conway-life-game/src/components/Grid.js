@@ -19,8 +19,8 @@ const neighborhood = [
 
 
 const Grid = () => {
-  const [rows, setRows] = useState(50);
-  const [cols, setCols] = useState(50);
+  const [rows, setRows] = useState(60);
+  const [cols, setCols] = useState(60);
   const [grid, setGrid] = useState(() => {
     const griddy = [];
     for (let i = 0; i < rows; i++) {
@@ -64,12 +64,12 @@ const Grid = () => {
     setGrid((g) => {
       //the simulation
       return produce(g, (newGrid) => {
+        let neighbors = 0;
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
-            let neighbors = 0;
             neighborhood.forEach(([x, y]) => {
-              const blocX = i + x;
-              const blocY = j + y;
+              const blocX = (i + x) % rows;
+              const blocY = (j + y) % cols;
               if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
               }
@@ -91,7 +91,6 @@ const Grid = () => {
 
   return (
     <>
-      <p>Rounds: {genCount}</p>
       {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
       <button
         onClick={() => {
@@ -139,6 +138,7 @@ const Grid = () => {
         Random
       </button>
 
+      <p>Generations: {genCount}</p>
       {/* map the grid */}
       <div
         style={{
