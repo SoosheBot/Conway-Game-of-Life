@@ -1,17 +1,18 @@
-import React from 'react';
-import './App.css';
-import Nav from './components/Nav';
-import Grid from './components/Grid';
+import React, { useState } from "react";
+import "./App.css";
+import Nav from "./components/Nav";
+import Grid from "./components/Grid";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="wrapper">
+      <div className="header">
         <Nav />
-      </header>
+      </div>
+
       <Grid />
     </div>
   );
-}
+};
 
 export default App;

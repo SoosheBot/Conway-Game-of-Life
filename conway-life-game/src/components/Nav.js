@@ -25,6 +25,7 @@ function Nav() {
 
   return (
     <div className="nav-wrapper">
+      <h1>John Conway's Game of Life</h1>
       <button type="button" onClick={() => setShow(true)}>
         Game Rules
       </button>
@@ -60,11 +61,6 @@ function Nav() {
           </ul>
         </div>
       </ModalRules>
-
-      <button onClick={() =>{}}>Next Generation</button>
-      <button onClick={() =>{}}>Start</button>
-      <button onClick={() =>{}}>Stop</button>
-      <button onClick={() =>{}}>Clear</button>
       <canvas />
     </div>
   );
