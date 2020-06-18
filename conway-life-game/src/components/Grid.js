@@ -22,18 +22,18 @@ const Grid = () => {
   const [rows, setRows] = useState(50);
   const [cols, setCols] = useState(50);
   const [grid, setGrid] = useState(() => {
-    // return newEmptyGrid();
     const griddy = [];
     for (let i = 0; i < rows; i++) {
       griddy.push(Array.from(Array(cols), () => 0));
     }
     return griddy;
+
   });
 
-  const newEmptyGrid = () => {
+  const emptyGrid = () => {
     const griddy = [];
     for (let i = 0; i < rows; i++) {
-      griddy.push(Array.from(Array(cols), () => 0))
+      griddy.push(Array.from(Array(cols), () => 0));
     }
     return griddy;
   };
@@ -108,7 +108,7 @@ const Grid = () => {
       {/* clear the screen and reset the timer */}
       <button
         onClick={() => {
-          setGrid(newEmptyGrid);
+          setGrid(emptyGrid);
           setGenCount(0);
         }}
       >
