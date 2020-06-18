@@ -11,13 +11,17 @@ const neighborhood = [
 	[ 1, -1], [ 1, 0], [ 1, 1],
 ];
 
-const Grid = () => {
-  const [grid, setGrid] = useState(() => {
-    const rows = [];
+const emptyGrid = () => {
+  const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0));
     }
     return rows;
+}
+
+const Grid = () => {
+  const [grid, setGrid] = useState(() => {
+    return emptyGrid()
   });
 
   //store whether we started the game or not in state. the default is false--not running
@@ -80,6 +84,9 @@ const Grid = () => {
       >
         {running ? "Stop" : "Start"}
       </button>
+      <button onClick={() => {
+        setGrid(emptyGrid());
+      }}>Clear</button>
       <div
         style={{
           display: "grid",
@@ -111,8 +118,7 @@ const Grid = () => {
 
       <button onClick={() => {}}>Next Generation</button>
 
-      <button onClick={() => {}}>Stop</button>
-      <button onClick={() => {}}>Clear</button>
+      
     </>
   );
 };
