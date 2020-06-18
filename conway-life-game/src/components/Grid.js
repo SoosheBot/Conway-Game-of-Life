@@ -2,10 +2,8 @@ import React, { useState, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
 import produce from "immer";
 
-
 // let gridRows = 60;
 // let gridCols = 60;
-
 
 const neighborhood = [
   [-1, -1],
@@ -18,13 +16,6 @@ const neighborhood = [
   [1, 1],
 ];
 
-// const newEmptyGrid = () => {
-//   const griddy = [];
-//   for (let i = 0; i < gridRows; i++) {
-//     griddy.push(Array.from(Array(gridCols), () => 0))
-//   }
-//   return griddy;
-// };
 
 
 const Grid = () => {
@@ -33,14 +24,20 @@ const Grid = () => {
   const [grid, setGrid] = useState(() => {
     // return newEmptyGrid();
     const griddy = [];
-  for (let i = 0; i < rows; i++) {
-    griddy.push(Array.from(Array(cols), () => 0))
-  }
-  return griddy;
+    for (let i = 0; i < rows; i++) {
+      griddy.push(Array.from(Array(cols), () => 0));
+    }
+    return griddy;
   });
- 
 
-
+  const newEmptyGrid = () => {
+    const griddy = [];
+    for (let i = 0; i < rows; i++) {
+      griddy.push(Array.from(Array(cols), () => 0))
+    }
+    return griddy;
+  };
+  
   //store whether we started the game or not in state. the default is false--not running
   const [running, setRunning] = useState(false);
   //set a running ref so you aren't running the run simulation once, espec since the run state is going to change
@@ -73,12 +70,7 @@ const Grid = () => {
             neighborhood.forEach(([x, y]) => {
               const blocX = i + x;
               const blocY = j + y;
-              if (
-                blocX >= 0 &&
-                blocX < rows &&
-                blocY >= 0 &&
-                blocY < cols
-              ) {
+              if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
               }
             });
@@ -116,7 +108,7 @@ const Grid = () => {
       {/* clear the screen and reset the timer */}
       <button
         onClick={() => {
-          setGrid(grid);
+          setGrid(newEmptyGrid);
           setGenCount(0);
         }}
       >
@@ -132,7 +124,7 @@ const Grid = () => {
         One Generation
       </button>
 
-        {/* display a random number of filled cells */}
+      {/* display a random number of filled cells */}
       <button
         onClick={() => {
           const rowsRandom = [];
@@ -147,7 +139,7 @@ const Grid = () => {
         Random
       </button>
 
-        {/* map the grid */}
+      {/* map the grid */}
       <div
         style={{
           display: "grid",
