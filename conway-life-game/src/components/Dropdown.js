@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 
-function Rules() {
+function Dropdown() {
     return (
         <div>
         
@@ -10,4 +10,4 @@ function Rules() {
     
 }
 
-export default Rules;
+export default DropDown;

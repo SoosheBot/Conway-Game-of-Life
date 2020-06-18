@@ -2,8 +2,10 @@ import React, { useState, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
 import produce from "immer";
 
-const numRows = 60;
-const numCols = 60;
+
+// let gridRows = 60;
+// let gridCols = 60;
+
 
 const neighborhood = [
   [-1, -1],
@@ -16,18 +18,28 @@ const neighborhood = [
   [1, 1],
 ];
 
-const emptyGrid = () => {
-  const rows = [];
-  for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => 0));
-  }
-  return rows;
-};
+// const newEmptyGrid = () => {
+//   const griddy = [];
+//   for (let i = 0; i < gridRows; i++) {
+//     griddy.push(Array.from(Array(gridCols), () => 0))
+//   }
+//   return griddy;
+// };
+
 
 const Grid = () => {
+  const [rows, setRows] = useState(50);
+  const [cols, setCols] = useState(50);
   const [grid, setGrid] = useState(() => {
-    return emptyGrid();
+    // return newEmptyGrid();
+    const griddy = [];
+  for (let i = 0; i < rows; i++) {
+    griddy.push(Array.from(Array(cols), () => 0))
+  }
+  return griddy;
   });
+ 
+
 
   //store whether we started the game or not in state. the default is false--not running
   const [running, setRunning] = useState(false);
@@ -55,17 +67,17 @@ const Grid = () => {
     setGrid((g) => {
       //the simulation
       return produce(g, (newGrid) => {
-        for (let i = 0; i < numRows; i++) {
-          for (let j = 0; j < numCols; j++) {
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
             let neighbors = 0;
             neighborhood.forEach(([x, y]) => {
               const blocX = i + x;
               const blocY = j + y;
               if (
                 blocX >= 0 &&
-                blocX < numRows &&
+                blocX < rows &&
                 blocY >= 0 &&
-                blocY < numCols
+                blocY < cols
               ) {
                 neighbors += g[blocX][blocY];
               }
@@ -104,7 +116,7 @@ const Grid = () => {
       {/* clear the screen and reset the timer */}
       <button
         onClick={() => {
-          setGrid(emptyGrid());
+          setGrid(grid);
           setGenCount(0);
         }}
       >
@@ -123,10 +135,10 @@ const Grid = () => {
         {/* display a random number of filled cells */}
       <button
         onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+          const rowsRandom = [];
+          for (let i = 0; i < rowsRandom; i++) {
+            rowsRandom.push(
+              Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
             );
           }
           setGrid(rows);
@@ -139,7 +151,7 @@ const Grid = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          gridTemplateColumns: `repeat(${cols}, 20px)`,
         }}
       >
         {grid.map((rows, i) =>
