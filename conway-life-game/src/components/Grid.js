@@ -64,14 +64,16 @@ const Grid = () => {
     setGrid((g) => {
       //the simulation
       return produce(g, (newGrid) => {
-        let neighbors = 0;
+        let sumNeighbors = 0;
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
+            let neighbors = 0
             neighborhood.forEach(([x, y]) => {
               const blocX = (i + x) % rows;
               const blocY = (j + y) % cols;
               if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
+                sumNeighbors += g[blocX][blocY];
               }
             });
             //now we write about what happens if neighboring cells are filled or clear
