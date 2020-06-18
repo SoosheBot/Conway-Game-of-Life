@@ -1,3 +1,6 @@
+import styled from 'styled-components';
+
+export default styled`
 .nav-wrapper {
   width: 100%;
   display: flex;
@@ -55,3 +58,7 @@ button {
   padding: 15px;
 
 }
+`;
+
+
+

@@ -97,7 +97,7 @@ const Grid = () => {
         onClick={() => {
           setRunning(!running);
           if (!running) {
-            runRef.current = true;
+            oneXGenRef.current = true;
             runSimulation();
           }
         }}
@@ -119,6 +119,12 @@ const Grid = () => {
         onClick={() => {
           console.log("Move one generation");
           // some code to advance the simulation by one, only
+            setRunning(!running);
+            if (!running) {
+              runRef.current = true;
+              // runSimulation();
+            }
+          
         }}
       >
         One Generation

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Dropdown from './Dropdown';
-import "./Nav-style.css";
+
 
 const RulesModal = ({ children, showRules, setShowRules }) => {
   const rulesContent = showRules && (
@@ -44,6 +44,7 @@ function Nav() {
   const [showRules, setShowRules] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   return (
+    
     <div className="nav-wrapper">
       <h1>John Conway's Game of Life</h1>
       <button type="button" onClick={() => setShowRules(true)}>
