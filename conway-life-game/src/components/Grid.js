@@ -2,10 +2,14 @@ import React, { useState, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
 import produce from "immer";
 
-const numRows = 50;
-const numCols = 50;
+const numRows = 60;
+const numCols = 60;
 
-
+const neighborhood = [
+  [-1, -1], [-1, 0], [-1, 1],
+	[ 0, -1], [ 0, 1],
+	[ 1, -1], [ 1, 0], [ 1, 1],
+];
 
 const Grid = () => {
   const [grid, setGrid] = useState(() => {
@@ -22,69 +26,95 @@ const Grid = () => {
   const runRef = useRef(running);
   runRef.current = running;
 
-  //what useCallback does -- Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. 
+  // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
     // if we are not running the sim then just return otherwise do a simulation
     if (!runRef.current) {
       return;
     }
 
-    // simulation here -- to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
+    // use setGrid to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
     setGrid((g) => {
-      return 
-    })
-    for (let i = 0; i < numRows; i++) {
-      for (let j = 0; j <numCols; j++) {
+      //the simulation
+      return produce(g, (newGrid) => {
+        for (let i = 0; i < numRows; i++) {
+          for (let j = 0; j < numCols; j++) {
+            let neighbors = 0;
+            neighborhood.forEach(([x, y]) => {
+              const blocX = i + x;
+              const blocY = j + y;
+              if (
+                blocX >= 0 &&
+                blocX < numRows &&
+                blocY >= 0 &&
+                blocY < numCols
+              ) {
+                neighbors += g[blocX][blocY];
+              }
+            });
+            //now we write about what happens if neighboring cells are filled or clear
+            if (neighbors < 2 || neighbors > 3) {
+              newGrid[i][j] = 0;
+            } else if (g[i][j] === 0 && neighbors === 3) {
+              newGrid[i][j] = 1;
+            }
+          }
+        }
+      });
+    });
 
-      }
-    }
-  setTimeout(runSimulation, 1000)
+    setTimeout(runSimulation, 100);
   }, []);
 
   return (
     <>
-    {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
-    <button onClick={() =>{
-      setRunning(!running)
-    }}>
-      {running ? "Stop" : "Start"}
-    </button>
+      {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
+      <button
+        onClick={() => {
+          setRunning(!running);
+          if (!running) {
+            runRef.current = true;
+            runSimulation();
+          }
+        }}
+      >
+        {running ? "Stop" : "Start"}
+      </button>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`
+          gridTemplateColumns: `repeat(${numCols}, 20px)`,
         }}
       >
         {grid.map((rows, i) =>
-    rows.map((col, k) => (
-      <div
-      key={`${i}-${k}`}
-      onClick={() => {
+          rows.map((col, j) => (
+            <div
+              key={`${i}-${j}`}
+              onClick={() => {
                 //in order to not mutate state of grid we use immer
-                const newGrid = produce(grid, gridCopy => {
-                  //can alter gridCopy make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
-                  gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                const newGrid = produce(grid, (newGrid) => {
+                  //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
+                  newGrid[i][j] = grid[i][j] ? 0 : 1;
                 });
                 setGrid(newGrid);
               }}
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "purple" : undefined,
-                border: "solid 1px black"
+                backgroundColor: grid[i][j] ? "purple" : undefined,
+                border: "solid 1px black",
               }}
             />
           ))
         )}
       </div>
 
-      <button onClick={() =>{}}>Next Generation</button>
-      
-      <button onClick={() =>{}}>Stop</button>
-      <button onClick={() =>{}}>Clear</button>
+      <button onClick={() => {}}>Next Generation</button>
+
+      <button onClick={() => {}}>Stop</button>
+      <button onClick={() => {}}>Clear</button>
     </>
   );
 };
-
 
 export default Grid;
