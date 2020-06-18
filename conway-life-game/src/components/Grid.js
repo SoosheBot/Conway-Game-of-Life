@@ -95,6 +95,7 @@ const Grid = () => {
       </button>
       <button onClick={() => {
         setGrid(emptyGrid());
+        setGenCount(0);
       }}>Clear</button>
       <div
         style={{
