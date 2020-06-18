@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
+
 import produce from "immer";
 
 // let gridRows = 60;
@@ -19,8 +20,8 @@ const neighborhood = [
 
 
 const Grid = () => {
-  const [rows, setRows] = useState(60);
-  const [cols, setCols] = useState(60);
+  const [rows, setRows] = useState(25);
+  const [cols, setCols] = useState(25);
   const [grid, setGrid] = useState(() => {
     const griddy = [];
     for (let i = 0; i < rows; i++) {
@@ -64,16 +65,14 @@ const Grid = () => {
     setGrid((g) => {
       //the simulation
       return produce(g, (newGrid) => {
-        let sumNeighbors = 0;
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
-            let neighbors = 0
+            let neighbors = 0;
             neighborhood.forEach(([x, y]) => {
-              const blocX = (i + x) % rows;
-              const blocY = (j + y) % cols;
+              const blocX = (i + x);
+              const blocY = (j + y);
               if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
-                sumNeighbors += g[blocX][blocY];
               }
             });
             //now we write about what happens if neighboring cells are filled or clear
@@ -128,13 +127,13 @@ const Grid = () => {
       {/* display a random number of filled cells */}
       <button
         onClick={() => {
-          const rows = [];
+          const griddy = [];
           for (let i = 0; i < rows; i++) {
-            rows.push(
+            griddy.push(
               Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
             );
           }
-          setGrid(rows);
+          setGrid(griddy);
         }}
       >
         Random
