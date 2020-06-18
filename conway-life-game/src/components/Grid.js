@@ -17,10 +17,10 @@ const Grid = () => {
   });
 
   //store whether we started the game or not in state. the default is false--not running
-  const [running, setRun] = useState(false);
+  const [running, setRunning] = useState(false);
   //set a running ref so you aren't running the run simulation once, espec since the run state is going to change
   const runRef = useRef(running);
-  runRef.current = running
+  runRef.current = running;
 
   //what useCallback does -- Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. 
   const runSimulation = useCallback(() => {
@@ -43,10 +43,10 @@ const Grid = () => {
 
   return (
     <>
+    {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
     <button onClick={() =>{
-      setRun(!run)
+      setRunning(!running)
     }}>
-      //if the game is running we display Stop, otherwise, display Start -- set the running state above
       {running ? "Stop" : "Start"}
     </button>
       <div
