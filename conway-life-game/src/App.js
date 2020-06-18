@@ -1,16 +1,18 @@
-import React from 'react';
-import './App.css';
-import Game from './components/Game';
+import React, { useState } from "react";
+import "./App.css";
+import Nav from "./components/Nav";
+import Grid from "./components/Grid";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <h4>Nav</h4> */}
-      </header>
-      <Game />
+    <div className="wrapper">
+      <div className="header">
+        <Nav />
+      </div>
+
+      <Grid />
     </div>
   );
-}
+};
 
 export default App;

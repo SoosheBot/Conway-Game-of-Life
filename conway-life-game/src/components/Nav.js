@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Game-style.css";
+import "./Nav-style.css";
 
 const ModalRules = ({ children, show, setShow }) => {
   const content = show && (
@@ -20,17 +20,18 @@ const ModalRules = ({ children, show, setShow }) => {
   return content;
 };
 
-function Game() {
+function Nav() {
   const [show, setShow] = useState(false);
+
   return (
-    <div>
-      <h1>Conway's Game of Life</h1>
+    <div className="nav-wrapper">
+      <h1>John Conway's Game of Life</h1>
       <button type="button" onClick={() => setShow(true)}>
-        Show Rules
+        Game Rules
       </button>
       <ModalRules show={show} setShow={setShow}>
         <div>
-          <h3>The Rules of the Game</h3>
+          <h3>How it works</h3>
           <ol>
             <li>
               Any live cell with fewer than two live neighbors dies of underpopulation.
@@ -50,10 +51,19 @@ function Game() {
               Conway's Game of Life
             </a>
           </sup>
+          <h3>How to Play</h3>
+          <ul>
+              <li>Create a few cells by clicking on the grid. Remember: If the cell has fewer than two living neighbor cells, it will die immediately in the next generation. If your cell has more than three neighbors, it will die immediately in the next generation.</li>
+              <li>Click the <strong>Start</strong> button to watch the cells evolve automatically.</li>
+              <li>Click the <strong>Next Generation</strong> button to watch the cell evolve one generation at a time.</li>
+              <li>Click the <strong>Stop</strong> button to pause the game.</li>
+              <li>Click the <strong>Clear</strong> button to clear your grid of all cells at any time. This will also reset the generation counter to 0.</li>
+          </ul>
         </div>
       </ModalRules>
+      <canvas />
     </div>
   );
 }
 
-export default Game;
+export default Nav;
