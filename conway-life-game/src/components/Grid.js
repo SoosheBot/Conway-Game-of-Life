@@ -30,6 +30,11 @@ const Grid = () => {
   const runRef = useRef(running);
   runRef.current = running;
 
+  // set a generation counter for 
+  const [genCount, setGenCount] = useState(0);
+  const genCountRef = useRef(genCount);
+  genCountRef.current = genCount;
+
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
     // if we are not running the sim then just return otherwise do a simulation
@@ -68,10 +73,14 @@ const Grid = () => {
     });
 
     setTimeout(runSimulation, 100);
+    setGenCount(genCountRef.current + 1)
   }, []);
+
+  
 
   return (
     <>
+      <p>Rounds: {genCount}</p>
       {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
       <button
         onClick={() => {
