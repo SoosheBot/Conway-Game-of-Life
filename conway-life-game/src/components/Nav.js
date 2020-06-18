@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./Nav-style.css";
 
-const ModalRules = ({ children, show, setShow }) => {
-  const content = show && (
+const RulesModal = ({ children, showRules, setShowRules }) => {
+  const rulesContent = showRules && (
     <div className="overlay">
       <div className="modal">
         <button
           className="close-modal"
           type="button"
-          onClick={() => setShow(false)}
+          onClick={() => setShowRules(false)}
         >
           Close
         </button>
@@ -17,19 +17,38 @@ const ModalRules = ({ children, show, setShow }) => {
     </div>
   );
 
-  return content;
+  return rulesContent;
+};
+
+const InfoModal = ({ children, showInfo, setShowInfo }) => {
+  const infoContent = showInfo && (
+    <div className="overlay">
+      <div className="modal">
+        <button
+          className="close-modal"
+          type="button"
+          onClick={() => setShowInfo(false)}
+        >
+          Close
+        </button>
+        <div className="modal-body">{children}</div>
+      </div>
+    </div>
+  );
+
+  return infoContent;
 };
 
 function Nav() {
-  const [show, setShow] = useState(false);
-
+  const [showRules, setShowRules] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   return (
     <div className="nav-wrapper">
       <h1>John Conway's Game of Life</h1>
-      <button type="button" onClick={() => setShow(true)}>
+      <button type="button" onClick={() => setShowRules(true)}>
         Game Rules
       </button>
-      <ModalRules show={show} setShow={setShow}>
+      <RulesModal showRules={showRules} setShowRules={setShowRules}>
         <div>
           <h3>How it works</h3>
           <ol>
@@ -59,11 +78,18 @@ function Nav() {
               <li>Click the <strong>Stop</strong> button to pause the game.</li>
               <li>Click the <strong>Clear</strong> button to clear your grid of all cells at any time. This will also reset the generation counter to 0.</li>
           </ul>
-        </div>
-      </ModalRules>
-      <canvas />
+        </div>  
+      </RulesModal>
+      <button onClick={() => setShowInfo(true)}>What do the Buttons do?</button>
+      <InfoModal showInfo={showInfo} setShowInfo={setShowInfo}>
+      <div>
+        <h3>What do the Buttons do?</h3>
+      </div>
+      </InfoModal>
+
     </div>
   );
 }
+
 
 export default Nav;

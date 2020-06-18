@@ -6,22 +6,27 @@ const numRows = 60;
 const numCols = 60;
 
 const neighborhood = [
-  [-1, -1], [-1, 0], [-1, 1],
-	[ 0, -1], [ 0, 1],
-	[ 1, -1], [ 1, 0], [ 1, 1],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
 ];
 
 const emptyGrid = () => {
   const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0));
-    }
-    return rows;
-}
+  for (let i = 0; i < numRows; i++) {
+    rows.push(Array.from(Array(numCols), () => 0));
+  }
+  return rows;
+};
 
 const Grid = () => {
   const [grid, setGrid] = useState(() => {
-    return emptyGrid()
+    return emptyGrid();
   });
 
   //store whether we started the game or not in state. the default is false--not running
@@ -30,10 +35,14 @@ const Grid = () => {
   const runRef = useRef(running);
   runRef.current = running;
 
-  // set a generation counter for 
+  // set a generation counter for
   const [genCount, setGenCount] = useState(0);
   const genCountRef = useRef(genCount);
   genCountRef.current = genCount;
+
+  const [oneXGen, setOneXGen] = useState(false);
+  const oneXGenRef = useRef(oneXGen);
+  oneXGenRef.current = oneXGen;
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
@@ -73,10 +82,8 @@ const Grid = () => {
     });
 
     setTimeout(runSimulation, 100);
-    setGenCount(genCountRef.current + 1)
+    setGenCount(genCountRef.current + 1);
   }, []);
-
-  
 
   return (
     <>
@@ -93,10 +100,42 @@ const Grid = () => {
       >
         {running ? "Stop" : "Start"}
       </button>
-      <button onClick={() => {
-        setGrid(emptyGrid());
-        setGenCount(0);
-      }}>Clear</button>
+
+      {/* clear the screen and reset the timer */}
+      <button
+        onClick={() => {
+          setGrid(emptyGrid());
+          setGenCount(0);
+        }}
+      >
+        Clear
+      </button>
+
+      <button
+        onClick={() => {
+          console.log("Move one generation");
+          // some code to advance the simulation by one, only
+        }}
+      >
+        One Generation
+      </button>
+
+        {/* display a random number of filled cells */}
+      <button
+        onClick={() => {
+          const rows = [];
+          for (let i = 0; i < numRows; i++) {
+            rows.push(
+              Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+            );
+          }
+          setGrid(rows);
+        }}
+      >
+        Random
+      </button>
+
+        {/* map the grid */}
       <div
         style={{
           display: "grid",
@@ -125,10 +164,6 @@ const Grid = () => {
           ))
         )}
       </div>
-
-      <button onClick={() => {}}>Next Generation</button>
-
-      
     </>
   );
 };
