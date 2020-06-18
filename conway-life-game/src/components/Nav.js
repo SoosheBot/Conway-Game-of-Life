@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Dropdown from './Dropdown';
 import "./Nav-style.css";
 
 const RulesModal = ({ children, showRules, setShowRules }) => {
@@ -86,7 +87,7 @@ function Nav() {
         <h3>What do the Buttons do?</h3>
       </div>
       </InfoModal>
-
+      <Dropdown />
     </div>
   );
 }

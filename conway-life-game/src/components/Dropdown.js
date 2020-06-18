@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 
-function Dropdown() {
+
+function DropDown() {
     return (
-        <div>
-        
-        </div>
-    )
-    
-}
+      <select>
+        <option value="choose-pattern">
+          choose a pattern
+        </option>
+        <option value="glider">Glider</option>
+        <option value="pulsar">Pulsar</option>
+      </select>
+    );
+  }
 
 export default DropDown;
