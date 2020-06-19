@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 const rows = 25;
 const cols = 25;
@@ -37,15 +37,19 @@ const Grid = () => {
   const genCountRef = useRef(genCount);
   genCountRef.current = genCount;
 
-  const runSim = useCallback((rows, cols) => {
+const runSim = useCallback(() => {
+  const runSim = () => {
     if (!runRef.current) {
       return;
     }
-
-    setGrid((g, newGrid) => {
+  }
+      
+    setGrid((g) => {
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
           let neighbors = 0;
+          let newGrid = []
+          console.log(newGrid)
           neighborhood.forEach(([x, y]) => {
             const blocX = i + x;
             const blocY = j + y;
@@ -73,12 +77,12 @@ const Grid = () => {
           gridTemplateColumns: `repeat(${cols}, 20px)`,
         }}
       >
-        {grid.map((rows, i) =>
-          rows.map((col, j) => (
+        {grid.map((row, i) =>
+          row.map((col, j) => (
             <div
               key={`${i}-${j}`}
               onClick={() => {
-                const newGrid = grid;
+                const newGrid = grid.slice(0);
                 //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
                 setGrid(newGrid);
@@ -105,6 +109,16 @@ const Grid = () => {
         }}
       >
         Random
+      </button>
+
+      <button
+        onClick={() => {
+          setRunning(running);
+          runSim()
+          }
+        }
+      >
+        {running ? "Stop" : "Start"}
       </button>
     </>
   );
