@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
 import produce from "immer";
 
@@ -10,8 +10,11 @@ const neighborhood = [
 ];
 
 const Grid = () => {
-  const [rows, setRows] = useState(25);
-  const [cols, setCols] = useState(25);
+  //rows and columns
+  const [rows] = useState(25);
+  const [cols] = useState(25);
+  
+  //grid setup
   const [grid, setGrid] = useState(() => {
     const griddy = [];
     for (let i = 0; i < rows; i++) {
@@ -28,16 +31,29 @@ const Grid = () => {
     return griddy;
   };
 
-  //store whether we started the game or not in state. the default is false--not running
+  // state
   const [running, setRunning] = useState(false);
-  //set a running ref so you aren't running the run simulation once, espec since the run state is going to change
+  const [genCount, setGenCount] = useState(0);
+  const [speed, setSpeed] = useState(0);
+  const [oneGen, setOneGen] = useState(false)
+  
+  //set refs for everything you aren't running only once
   const runRef = useRef(running);
   runRef.current = running;
 
-  // set a generation counter for 
-  const [genCount, setGenCount] = useState(0);
   const genCountRef = useRef(genCount);
   genCountRef.current = genCount;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+       // `newGeneration` function needs to be refactored to remove all `updateCells` calls. It should update the input array and return the result
+       const newCells = setOneGen(oneGen);
+       // there will be only one call to React on each interval
+       setOneGen(newCells);
+    }, 1000);
+    // return () => clearInterval(interval);
+  }, []);
+ 
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
@@ -45,7 +61,6 @@ const Grid = () => {
     if (!runRef.current) {
       return;
     }
-
     // use setGrid to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
     setGrid((g) => {
       //the simulation
@@ -80,6 +95,8 @@ const Grid = () => {
     setGenCount(genCountRef.current + 1)
   }, []);
 
+
+
   
 
   return (
@@ -103,7 +120,7 @@ const Grid = () => {
       }}>Clear</button>
 
     <button onClick={() => {
-      setGenCount();
+      setGenCount(genCount + 1)
     }}>One Step</button>
 
 <button
