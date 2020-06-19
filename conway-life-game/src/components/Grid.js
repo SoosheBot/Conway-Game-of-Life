@@ -3,8 +3,6 @@ import React, { useState, useCallback, useRef } from "react";
 
 import produce from "immer";
 
-// let gridRows = 60;
-// let gridCols = 60;
 
 const neighborhood = [
   [-1, -1],
@@ -52,73 +50,43 @@ const Grid = () => {
   oneXGenRef.current = oneXGen;
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
-  const runAutoSimulation = useCallback(() => {
+  const runSimulation = useCallback(() => {
     // if we are not running the sim then just return otherwise do a simulation
     if (!runRef.current) {
       return;
     }
 
     // use setGrid to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
-    setGrid((g) => {
-      //the simulation
-      return produce(g, (newGrid) => {
-        for (let i = 0; i < rows; i++) {
-          for (let j = 0; j < cols; j++) {
-            let neighbors = 0;
-            neighborhood.forEach(([x, y]) => {
-              const blocX = i + x;
-              const blocY = j + y;
-              if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
-                neighbors += g[blocX][blocY];
-              }
-            });
-            //now we write about what happens if neighboring cells are filled or clear
-            if (neighbors < 2 || neighbors > 3) {
-              newGrid[i][j] = 0;
-            } else if (g[i][j] === 0 && neighbors === 3) {
-              newGrid[i][j] = 1;
-            }
-          }
-        }
-      });
-    });
+    // setGrid((g) => {
+    //   //the simulation
+    //   return produce(g, (newGrid) => {
+    //     for (let i = 0; i < rows; i++) {
+    //       for (let j = 0; j < cols; j++) {
+    //         let neighbors = 0;
+    //         neighborhood.forEach(([x, y]) => {
+    //           const blocX = i + x;
+    //           const blocY = j + y;
+    //           if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
+    //             neighbors += g[blocX][blocY];
+    //           }
+    //         });
+    //         //now we write about what happens if neighboring cells are filled or clear
+    //         if (neighbors < 2 || neighbors > 3) {
+    //           newGrid[i][j] = 0;
+    //         } else if (g[i][j] === 0 && neighbors === 3) {
+    //           newGrid[i][j] = 1;
+    //         }
+    //       }
+    //     }
+    //   });
+    // });
+    setGrid(grid)
 
-    setTimeout(runAutoSimulation, 100);
+    setTimeout(runSimulation, 100);
     setGenCount(genCountRef.current + 1);
   }, []);
 
-  const runManualSimulation = useCallback(() => {
-      // if we are not running the sim then just return otherwise do a simulation
-      if (!oneXGenRef.current) {
-        return;
-      }
-
-  setGrid((g) => {
-    //the simulation
-    return produce(g, (newGrid) => {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          let neighbors = 0;
-          neighborhood.forEach(([x, y]) => {
-            const blocX = i + x;
-            const blocY = j + y;
-            if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
-              neighbors += g[blocX][blocY];
-            }
-          });
-          //now we write about what happens if neighboring cells are filled or clear
-          if (neighbors < 2 || neighbors > 3) {
-            newGrid[i][j] = 0;
-          } else if (g[i][j] === 0 && neighbors === 3) {
-            newGrid[i][j] = 1;
-          }
-        }
-      }
-    });
-  });
-      setTimeout(runManualSimulation, 1);
-      setGenCount(genCountRef.current + 1);
-    }, []);
+  
 
   return (
     <>
@@ -128,7 +96,7 @@ const Grid = () => {
           setRunning(!running);
           if (!running) {
             runRef.current = true;
-            runAutoSimulation();
+            runSimulation();
           }
         }}
       >
@@ -183,10 +151,11 @@ const Grid = () => {
               key={`${i}-${j}`}
               onClick={() => {
                 //in order to not mutate state of grid we use immer
-                const newGrid = produce(grid, (newGrid) => {
-                  //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
-                  newGrid[i][j] = grid[i][j] ? 0 : 1;
-                });
+                // const newGrid = produce(grid, (newGrid) => {
+                //   //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
+                //   newGrid[i][j] = grid[i][j] ? 0 : 1;
+                // });
+                let newGrid = []
                 setGrid(newGrid);
               }}
               style={{
