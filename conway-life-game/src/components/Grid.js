@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-// Immer package to produce new state from previous one
-import produce from "immer";
+import React, { useState, useCallback, useRef } from "react";
+
 
 const neighborhood = [
   [-1, -1],
@@ -51,15 +50,8 @@ const Grid = () => {
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     // `newGeneration` function needs to be refactored to remove all `updateCells` calls. It should update the input array and return the result
-  //     const newCells = setOneGen(oneGen);
-  //     // there will be only one call to React on each interval
-  //     setOneGen(newCells);
-  //   }, 1000);
-  //   // return () => clearInterval(interval);
-  // }, []);
+  const genRef = useRef(oneGen);
+  genRef.current = oneGen;
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
@@ -70,7 +62,7 @@ const Grid = () => {
     // use setGrid to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
     setGrid((g) => {
       //the simulation
-      return produce(g, (newGrid) => {
+
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
             let neighbors = 0;
@@ -82,6 +74,7 @@ const Grid = () => {
               }
             });
             //now we write about what happens if neighboring cells are filled or clear
+            let newGrid = [];
             if (neighbors < 2 || neighbors > 3) {
               newGrid[i][j] = 0;
             } else if (g[i][j] === 0 && neighbors === 3) {
@@ -89,13 +82,13 @@ const Grid = () => {
             }
           }
         }
-      });
     });
 
-    setTimeout(runSimulation, 100, speedRef.current);
-    setGenCount(genCountRef.current + 1);
-    // setSpeed(speedRef.current);
-  }, []);
+    setTimeout(() => {
+      setGenCount(genCountRef.current + 1)
+      runSimulation()
+  }, speedRef.current );
+}, []);
 
   return (
     <>
@@ -123,10 +116,10 @@ const Grid = () => {
 
       <button
         onClick={() => {
-          setGenCount(genCount + 1);
+          
         }}
       >
-        One Step
+        One Generation
       </button>
 
       <button
@@ -145,7 +138,10 @@ const Grid = () => {
 
       <button onClick={() => {
         setSpeed(1000)
-      }}>Slow</button>
+      }}>Super Slow</button>
+      <button onClick={() => {
+        setSpeed(10)
+      }}>Ultra Fast</button>
 
       <div
         style={{
@@ -159,11 +155,11 @@ const Grid = () => {
               key={`${i}-${j}`}
               onClick={() => {
                 //in order to not mutate state of grid we use immer
-                const newGrid = produce(grid, (newGrid) => {
-                  //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
-                  newGrid[i][j] = grid[i][j] ? 0 : 1;
-                });
-                setGrid(newGrid);
+                // const newGrid = produce(grid, (newGrid) => {
+                //   //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
+                //   newGrid[i][j] = grid[i][j] ? 0 : 1;
+                // });
+                // setGrid(newGrid);
               }}
               style={{
                 width: 20,
@@ -180,3 +176,34 @@ const Grid = () => {
 };
 
 export default Grid;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
