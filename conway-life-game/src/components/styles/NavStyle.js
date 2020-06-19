@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export default styled`
+//styles for the modal buttons and nav bar
+
+const NavStyle = styled.div`
 .nav-wrapper {
   width: 100%;
   display: flex;

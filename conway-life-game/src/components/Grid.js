@@ -17,8 +17,6 @@ const neighborhood = [
   [1, 1],
 ];
 
-
-
 const Grid = () => {
   const [rows, setRows] = useState(25);
   const [cols, setCols] = useState(25);
@@ -28,7 +26,6 @@ const Grid = () => {
       griddy.push(Array.from(Array(cols), () => 0));
     }
     return griddy;
-
   });
 
   const emptyGrid = () => {
@@ -55,7 +52,7 @@ const Grid = () => {
   oneXGenRef.current = oneXGen;
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
-  const runSimulation = useCallback(() => {
+  const runAutoSimulation = useCallback(() => {
     // if we are not running the sim then just return otherwise do a simulation
     if (!runRef.current) {
       return;
@@ -69,8 +66,8 @@ const Grid = () => {
           for (let j = 0; j < cols; j++) {
             let neighbors = 0;
             neighborhood.forEach(([x, y]) => {
-              const blocX = (i + x);
-              const blocY = (j + y);
+              const blocX = i + x;
+              const blocY = j + y;
               if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
               }
@@ -86,9 +83,42 @@ const Grid = () => {
       });
     });
 
-    setTimeout(runSimulation, 100);
+    setTimeout(runAutoSimulation, 100);
     setGenCount(genCountRef.current + 1);
   }, []);
+
+  const runManualSimulation = useCallback(() => {
+      // if we are not running the sim then just return otherwise do a simulation
+      if (!oneXGenRef.current) {
+        return;
+      }
+
+  setGrid((g) => {
+    //the simulation
+    return produce(g, (newGrid) => {
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          let neighbors = 0;
+          neighborhood.forEach(([x, y]) => {
+            const blocX = i + x;
+            const blocY = j + y;
+            if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
+              neighbors += g[blocX][blocY];
+            }
+          });
+          //now we write about what happens if neighboring cells are filled or clear
+          if (neighbors < 2 || neighbors > 3) {
+            newGrid[i][j] = 0;
+          } else if (g[i][j] === 0 && neighbors === 3) {
+            newGrid[i][j] = 1;
+          }
+        }
+      }
+    });
+  });
+      setTimeout(runManualSimulation, 1);
+      setGenCount(genCountRef.current + 1);
+    }, []);
 
   return (
     <>
@@ -97,8 +127,8 @@ const Grid = () => {
         onClick={() => {
           setRunning(!running);
           if (!running) {
-            oneXGenRef.current = true;
-            runSimulation();
+            runRef.current = true;
+            runAutoSimulation();
           }
         }}
       >
@@ -119,12 +149,6 @@ const Grid = () => {
         onClick={() => {
           console.log("Move one generation");
           // some code to advance the simulation by one, only
-            setRunning(!running);
-            if (!running) {
-              runRef.current = true;
-              // runSimulation();
-            }
-          
         }}
       >
         One Generation
