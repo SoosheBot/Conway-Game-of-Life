@@ -2,18 +2,22 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 // Immer package to produce new state from previous one
 import produce from "immer";
 
-
 const neighborhood = [
-  [-1, -1], [-1, 0], [-1, 1],
-	[ 0, -1], [ 0, 1],
-	[ 1, -1], [ 1, 0], [ 1, 1],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
 ];
 
 const Grid = () => {
   //rows and columns
   const [rows] = useState(25);
   const [cols] = useState(25);
-  
+
   //grid setup
   const [grid, setGrid] = useState(() => {
     const griddy = [];
@@ -34,9 +38,9 @@ const Grid = () => {
   // state
   const [running, setRunning] = useState(false);
   const [genCount, setGenCount] = useState(0);
-  const [speed, setSpeed] = useState(0);
-  const [oneGen, setOneGen] = useState(false)
-  
+  const [speed, setSpeed] = useState(100);
+  const [oneGen, setOneGen] = useState(false);
+
   //set refs for everything you aren't running only once
   const runRef = useRef(running);
   runRef.current = running;
@@ -44,16 +48,18 @@ const Grid = () => {
   const genCountRef = useRef(genCount);
   genCountRef.current = genCount;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-       // `newGeneration` function needs to be refactored to remove all `updateCells` calls. It should update the input array and return the result
-       const newCells = setOneGen(oneGen);
-       // there will be only one call to React on each interval
-       setOneGen(newCells);
-    }, 1000);
-    // return () => clearInterval(interval);
-  }, []);
- 
+  const speedRef = useRef(speed);
+  speedRef.current = speed;
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     // `newGeneration` function needs to be refactored to remove all `updateCells` calls. It should update the input array and return the result
+  //     const newCells = setOneGen(oneGen);
+  //     // there will be only one call to React on each interval
+  //     setOneGen(newCells);
+  //   }, 1000);
+  //   // return () => clearInterval(interval);
+  // }, []);
 
   // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
   const runSimulation = useCallback(() => {
@@ -71,12 +77,7 @@ const Grid = () => {
             neighborhood.forEach(([x, y]) => {
               const blocX = i + x;
               const blocY = j + y;
-              if (
-                blocX >= 0 &&
-                blocX < rows &&
-                blocY >= 0 &&
-                blocY < cols
-              ) {
+              if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
                 neighbors += g[blocX][blocY];
               }
             });
@@ -91,13 +92,10 @@ const Grid = () => {
       });
     });
 
-    setTimeout(runSimulation, 100);
-    setGenCount(genCountRef.current + 1)
+    setTimeout(runSimulation, 100, speedRef.current);
+    setGenCount(genCountRef.current + 1);
+    // setSpeed(speedRef.current);
   }, []);
-
-
-
-  
 
   return (
     <>
@@ -114,16 +112,24 @@ const Grid = () => {
       >
         {running ? "Stop" : "Start"}
       </button>
-      <button onClick={() => {
-        setGrid(emptyGrid());
-        setGenCount(0);
-      }}>Clear</button>
+      <button
+        onClick={() => {
+          setGrid(emptyGrid());
+          setGenCount(0);
+        }}
+      >
+        Clear
+      </button>
 
-    <button onClick={() => {
-      setGenCount(genCount + 1)
-    }}>One Step</button>
+      <button
+        onClick={() => {
+          setGenCount(genCount + 1);
+        }}
+      >
+        One Step
+      </button>
 
-<button
+      <button
         onClick={() => {
           const griddy = [];
           for (let i = 0; i < rows; i++) {
@@ -137,6 +143,9 @@ const Grid = () => {
         Random
       </button>
 
+      <button onClick={() => {
+        setSpeed(1000)
+      }}>Slow</button>
 
       <div
         style={{
