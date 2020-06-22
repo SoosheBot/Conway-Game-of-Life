@@ -23,16 +23,16 @@ The initial pattern constitutes the 'seed' of the system. The first generation i
 
 ## Tasks
 ### Basic project features
-- [ ] Display includes a text area that shows the current generation of cells being displayed
-- [ ] Display includes a grid of cells, at least 25x25, that can be toggled to be alive or dead
-- [ ] Display includes working buttons that start / stop the animation and clear the grid
+- [x] Display includes a text area that shows the current generation of cells being displayed
+- [x] Display includes a grid of cells, at least 25x25, that can be toggled to be alive or dead
+- [x] Display includes working buttons that start / stop the animation and clear the grid
 - [ ] Algorithm to generate new generations of cells correctly implemented
 - [ ] At least 3 features from Custom Features section successfully implemented
-- [ ] Application includes a section outlining the rules to Conway's "Game of Life"
+- [x] Application includes a section outlining the rules to Conway's "Game of Life"
 
 ### Custom features (Implement at least 3)
 - [ ] Create a few sample cell configurations that users can load and run
-- [ ] Add an option that creates a random cell configuration that users can run
+- [x] Add an option that creates a random cell configuration that users can run
 - [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [ ] Allow users to specify the speed of the simulation
 - [ ] Provide functionality to manually step through the simulation one generation at a time, as opposed to animating automatically

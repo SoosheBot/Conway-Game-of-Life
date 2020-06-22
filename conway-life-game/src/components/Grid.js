@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
 
 const rows = 25;
 const cols = 25;
@@ -28,7 +28,7 @@ const Grid = () => {
   });
 
   const [running, setRunning] = useState(false);
-  const [nextGen, setNextGen] = useState(false);
+  // const [nextGen, setNextGen] = useState(false);
   const [genCount, setGenCount] = useState(0);
 
   const runRef = useRef(running);
@@ -38,22 +38,19 @@ const Grid = () => {
   genCountRef.current = genCount;
 
 const runSim = useCallback(() => {
-  const runSim = () => {
     if (!runRef.current) {
       return;
     }
-  }
-      
-    setGrid((g) => {
+
+    setGrid(g => {
+      let newGrid = emptyGrid();//grid.slice(0)
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
           let neighbors = 0;
-          let newGrid = []
-          console.log(newGrid)
           neighborhood.forEach(([x, y]) => {
             const blocX = i + x;
             const blocY = j + y;
-            if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < rows) {
+            if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
               neighbors += g[blocX][blocY];
             }
           });
@@ -64,10 +61,16 @@ const runSim = useCallback(() => {
           }
         }
       }
+      return newGrid;
     });
-    setTimeout(runSim, 100);
-    setGenCount(genCountRef.current + 1);
-  }, []);
+    setTimeout(() => {
+      setGenCount(genCountRef.current + 1);
+      runSim()
+    });
+    
+}, []);
+
+
 
   return (
     <>
@@ -77,13 +80,13 @@ const runSim = useCallback(() => {
           gridTemplateColumns: `repeat(${cols}, 20px)`,
         }}
       >
-        {grid.map((row, i) =>
+        {grid.map((row, i) => 
           row.map((col, j) => (
             <div
               key={`${i}-${j}`}
               onClick={() => {
                 const newGrid = grid.slice(0);
-                //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
+                //with this code we can toggle the colored squares on and off
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
                 setGrid(newGrid);
               }}
@@ -94,8 +97,8 @@ const runSim = useCallback(() => {
                 border: "solid 1px black",
               }}
             />
-          ))
-        )}
+          ))  
+            )}
       </div>
       <button
         onClick={() => {
@@ -110,16 +113,18 @@ const runSim = useCallback(() => {
       >
         Random
       </button>
-
+      <p>{genCount}</p>
       <button
-        onClick={() => {
-          setRunning(running);
-          runSim()
-          }
-        }
-      >
-        {running ? "Stop" : "Start"}
-      </button>
+                    onClick={() => {
+                    setRunning(!running);
+                    if (running) {
+                        runRef.current = true;
+                        runSim();
+                    }
+                    }}
+                >
+                    {running ? "Stop" : "Start"}
+                </button>
     </>
   );
 };
