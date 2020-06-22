@@ -22,10 +22,40 @@ const emptyGrid = () => {
   return griddy;
 };
 
+const gameRules = (g) => {
+  let newGrid = emptyGrid();//grid.slice(0)
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      let neighbors = 0;
+      neighborhood.forEach(([x, y]) => {
+        const blocX = i + x;
+        const blocY = j + y;
+        if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
+          neighbors += g[blocX][blocY];
+        }
+      });
+      if (neighbors < 2 || neighbors > 3) {
+        newGrid[i][j] = 0;
+      } else if ( g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
+        newGrid[i][j] = 1;
+      } else if (g[i][j] === 0 && neighbors === 3) {
+        newGrid[i][j] = 1;
+      }
+    } 
+  }
+  return newGrid;
+}
+
 const Grid = () => {
-  const [grid, setGrid] = useState(() => {
+  const [gridOne, setGridOne] = useState(() => {
     return emptyGrid();
   });
+
+  const [gridTwo, setGridTwo] = useState(() => {
+    return emptyGrid();
+  });
+
+  const [activeGrid, setActiveGrid] = useState(1);
 
   const [running, setRunning] = useState(false);
   // const [nextGen, setNextGen] = useState(false);
@@ -42,37 +72,19 @@ const runSim = useCallback(() => {
       return;
     }
 
-    setGrid(g => {
-      let newGrid = emptyGrid();//grid.slice(0)
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          let neighbors = 0;
-          neighborhood.forEach(([x, y]) => {
-            const blocX = i + x;
-            const blocY = j + y;
-            if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
-              neighbors += g[blocX][blocY];
-            }
-          });
-          if (neighbors < 2 || neighbors > 3) {
-            newGrid[i][j] = 0;
-          } else if ( g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
-            newGrid[i][j] = 1;
-          } else if (g[i][j] === 0 && neighbors === 3) {
-            newGrid[i][j] = 1;
-          }
-          // newGrid[i][j] = neighbors;
-        } 
-      }
-      console.log(newGrid)
-      return newGrid;
+    if (activeGrid === 1) {
+      setGridTwo(gameRules(gridOne));
+      setActiveGrid(2);
+    } else {
+      setGridOne(gameRules(gridTwo));
+      setActiveGrid(1);
+    }
+
     });
-    // setTimeout(() => {
-    //   setGenCount(genCountRef.current + 1);
-    //   runSim()
-    // });
-    
-}, []);
+
+
+
+const grid =  (activeGrid === 1) ? gridOne :  gridTwo
 
 
 
@@ -92,7 +104,12 @@ const runSim = useCallback(() => {
                 const newGrid = Array.from(grid);
                 //with this code we can toggle the colored squares on and off
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
-                setGrid(newGrid);
+                if (activeGrid === 1) {
+                  setGridOne(newGrid)
+                } else {
+                  setGridTwo(newGrid)
+                }
+                
               }}
               style={{
                 width: 20,
@@ -112,7 +129,11 @@ const runSim = useCallback(() => {
               Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
             );
           }
-          setGrid(griddy);
+          if (activeGrid === 1) {
+            setGridOne(griddy)
+          } else {
+            setGridTwo(griddy)
+          }
         }}
       >
         Random
