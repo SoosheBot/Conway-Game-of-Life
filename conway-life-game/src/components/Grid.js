@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 
 const rows = 5;
 const cols = 5;
@@ -23,7 +23,7 @@ const emptyGrid = () => {
 };
 
 const gameRules = (g) => {
-  let newGrid = emptyGrid();//grid.slice(0)
+  let newGrid = emptyGrid(); //grid.slice(0)
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       let neighbors = 0;
@@ -36,17 +36,17 @@ const gameRules = (g) => {
       });
       if (neighbors < 2 || neighbors > 3) {
         newGrid[i][j] = 0;
-      } else if ( g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
+      } else if (g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
         newGrid[i][j] = 1;
       } else if (g[i][j] === 0 && neighbors === 3) {
         newGrid[i][j] = 1;
       }
-    } 
+    }
   }
   return newGrid;
-}
+};
 
-const Grid = () => {
+const Grid = (props) => {
   const [gridOne, setGridOne] = useState(() => {
     return emptyGrid();
   });
@@ -55,23 +55,15 @@ const Grid = () => {
     return emptyGrid();
   });
 
-  const [activeGrid, setActiveGrid] = useState(1);
-
   const [running, setRunning] = useState(false);
-  // const [nextGen, setNextGen] = useState(false);
+
+  const [activeGrid, setActiveGrid] = useState(1);
+  
+
   const [genCount, setGenCount] = useState(0);
 
-  const runRef = useRef(running);
-  runRef.current = running;
 
-  const genCountRef = useRef(genCount);
-  genCountRef.current = genCount;
-
-const runSim = useCallback(() => {
-    if (!runRef.current) {
-      return;
-    }
-
+  const nextGen = useCallback(() => {
     if (activeGrid === 1) {
       setGridTwo(gameRules(gridOne));
       setActiveGrid(2);
@@ -79,14 +71,17 @@ const runSim = useCallback(() => {
       setGridOne(gameRules(gridTwo));
       setActiveGrid(1);
     }
+  });
 
-    });
+  const runSim = () => {
+    if (running) {
+      return;
+    }
+    setGenCount(genCount + 1);
+    // setTimeout()
+  };
 
-
-
-const grid =  (activeGrid === 1) ? gridOne :  gridTwo
-
-
+  const grid = activeGrid === 1 ? gridOne : gridTwo;
 
   return (
     <>
@@ -96,7 +91,7 @@ const grid =  (activeGrid === 1) ? gridOne :  gridTwo
           gridTemplateColumns: `repeat(${cols}, 20px)`,
         }}
       >
-        {grid.map((row, i) => 
+        {grid.map((row, i) =>
           row.map((col, j) => (
             <div
               key={`${i}-${j}`}
@@ -105,11 +100,10 @@ const grid =  (activeGrid === 1) ? gridOne :  gridTwo
                 //with this code we can toggle the colored squares on and off
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
                 if (activeGrid === 1) {
-                  setGridOne(newGrid)
+                  setGridOne(newGrid);
                 } else {
-                  setGridTwo(newGrid)
+                  setGridTwo(newGrid);
                 }
-                
               }}
               style={{
                 width: 20,
@@ -118,8 +112,8 @@ const grid =  (activeGrid === 1) ? gridOne :  gridTwo
                 border: "solid 1px black",
               }}
             />
-          ))  
-            )}
+          ))
+        )}
       </div>
       <button
         onClick={() => {
@@ -130,26 +124,24 @@ const grid =  (activeGrid === 1) ? gridOne :  gridTwo
             );
           }
           if (activeGrid === 1) {
-            setGridOne(griddy)
+            setGridOne(griddy);
           } else {
-            setGridTwo(griddy)
+            setGridTwo(griddy);
           }
         }}
       >
         Random
       </button>
-      <p>{genCount}</p>
+      <p>Generation Count: {props.genCount}</p>
       <button
                     onClick={() => {
-                    setRunning(!running);
-                    if (running) {
-                        runRef.current = true;
-                        runSim();
-                    }
+                      setRunning(!running);
+                      runSim()
+                      nextGen()
                     }}
                 >
                     {running ? "Stop" : "Start"}
-                </button>
+                </button> 
     </>
   );
 };
