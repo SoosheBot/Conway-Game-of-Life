@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 
-const rows = 25;
-const cols = 25;
+const rows = 5;
+const cols = 5;
 
 const neighborhood = [
   [-1, -1],
@@ -56,17 +56,21 @@ const runSim = useCallback(() => {
           });
           if (neighbors < 2 || neighbors > 3) {
             newGrid[i][j] = 0;
+          } else if ( g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
+            newGrid[i][j] = 1;
           } else if (g[i][j] === 0 && neighbors === 3) {
             newGrid[i][j] = 1;
           }
-        }
+          // newGrid[i][j] = neighbors;
+        } 
       }
+      console.log(newGrid)
       return newGrid;
     });
-    setTimeout(() => {
-      setGenCount(genCountRef.current + 1);
-      runSim()
-    });
+    // setTimeout(() => {
+    //   setGenCount(genCountRef.current + 1);
+    //   runSim()
+    // });
     
 }, []);
 
@@ -85,7 +89,7 @@ const runSim = useCallback(() => {
             <div
               key={`${i}-${j}`}
               onClick={() => {
-                const newGrid = grid.slice(0);
+                const newGrid = Array.from(grid);
                 //with this code we can toggle the colored squares on and off
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
                 setGrid(newGrid);
