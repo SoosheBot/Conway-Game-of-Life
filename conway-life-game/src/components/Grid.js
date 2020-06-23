@@ -1,119 +1,121 @@
-import React, { useState, useCallback, useRef } from "react";
-// Immer package to produce new state from previous one
-import produce from "immer";
+import React, { useState, useEffect } from "react";
 
-const numRows = 60;
-const numCols = 60;
+const rows = 25;
+const cols = 25;
 
 const neighborhood = [
-  [-1, -1], [-1, 0], [-1, 1],
-	[ 0, -1], [ 0, 1],
-	[ 1, -1], [ 1, 0], [ 1, 1],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
 ];
 
 const emptyGrid = () => {
-  const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0));
-    }
-    return rows;
-}
+  const griddy = [];
+  for (let i = 0; i < rows; i++) {
+    griddy.push(Array.from(Array(cols), () => 0));
+  }
+  return griddy;
+};
 
-const Grid = () => {
-  const [grid, setGrid] = useState(() => {
-    return emptyGrid()
-  });
-
-  //store whether we started the game or not in state. the default is false--not running
-  const [running, setRunning] = useState(false);
-  //set a running ref so you aren't running the run simulation once, espec since the run state is going to change
-  const runRef = useRef(running);
-  runRef.current = running;
-
-  // set a generation counter for 
-  const [genCount, setGenCount] = useState(0);
-  const genCountRef = useRef(genCount);
-  genCountRef.current = genCount;
-
-  // use useCallback so the function doesn't change/not be recreated every render. the useCallback hook returns a memoized version of the callback that only changes if one of the dependencies has changed
-  const runSimulation = useCallback(() => {
-    // if we are not running the sim then just return otherwise do a simulation
-    if (!runRef.current) {
-      return;
-    }
-
-    // use setGrid to pass in function to get current value of grid and return the new value that we can mutate (different way of doing what we did in the newGrid() below)
-    setGrid((g) => {
-      //the simulation
-      return produce(g, (newGrid) => {
-        for (let i = 0; i < numRows; i++) {
-          for (let j = 0; j < numCols; j++) {
-            let neighbors = 0;
-            neighborhood.forEach(([x, y]) => {
-              const blocX = i + x;
-              const blocY = j + y;
-              if (
-                blocX >= 0 &&
-                blocX < numRows &&
-                blocY >= 0 &&
-                blocY < numCols
-              ) {
-                neighbors += g[blocX][blocY];
-              }
-            });
-            //now we write about what happens if neighboring cells are filled or clear
-            if (neighbors < 2 || neighbors > 3) {
-              newGrid[i][j] = 0;
-            } else if (g[i][j] === 0 && neighbors === 3) {
-              newGrid[i][j] = 1;
-            }
-          }
+const gameRules = (g) => {
+  let newGrid = emptyGrid(); //grid.slice(0)
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      let neighbors = 0;
+      neighborhood.forEach(([x, y]) => {
+        const blocX = i + x;
+        const blocY = j + y;
+        if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
+          neighbors += g[blocX][blocY];
         }
       });
-    });
+      if (neighbors < 2 || neighbors > 3) {
+        newGrid[i][j] = 0;
+      } else if (g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
+        newGrid[i][j] = 1;
+      } else if (g[i][j] === 0 && neighbors === 3) {
+        newGrid[i][j] = 1;
+      }
+    }
+  }
+  return newGrid;
+};
 
-    setTimeout(runSimulation, 100);
-    setGenCount(genCountRef.current + 1)
-  }, []);
+const Grid = () => {
+  const [gridOne, setGridOne] = useState(() => {
+    return emptyGrid();
+  });
 
-  
+  const [gridTwo, setGridTwo] = useState(() => {
+    return emptyGrid();
+  });
+
+  const [running, setRunning] = useState(false);
+
+  const [activeGrid, setActiveGrid] = useState(1);
+
+  const [genCount, setGenCount] = useState(0);
+
+  const nextGen = () => {
+    if (activeGrid === 1) {
+      setGridTwo(gameRules(gridOne));
+      setActiveGrid(2);
+      // setGenCount(genCount + 1);
+    } else {
+      setGridOne(gameRules(gridTwo));
+      setActiveGrid(1);
+      setGenCount(genCount + 1);
+    }
+  };
+
+  // const runSim = () => {
+  //   if (!running) {
+  //     return;
+  //   }
+
+  // };
+
+  const grid = activeGrid === 1 ? gridOne : gridTwo;
+
+  useEffect(() => {
+    let runSim = null;
+    if (activeGrid && running) {
+      runSim = setInterval(() => {
+        nextGen();
+      }, 300);
+    } else if (!running) {
+      clearInterval(runSim);
+      return;
+    }
+    return () => clearInterval(runSim);
+  }, [activeGrid, running]);
 
   return (
     <>
-      <p>Rounds: {genCount}</p>
-      {/* if the game is running we display Stop, otherwise, display Start -- set the running state above */}
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runRef.current = true;
-            runSimulation();
-          }
-        }}
-      >
-        {running ? "Stop" : "Start"}
-      </button>
-      <button onClick={() => {
-        setGrid(emptyGrid());
-        setGenCount(0);
-      }}>Clear</button>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          gridTemplateColumns: `repeat(${cols}, 20px)`,
         }}
       >
-        {grid.map((rows, i) =>
-          rows.map((col, j) => (
+        {grid.map((row, i) =>
+          row.map((col, j) => (
             <div
               key={`${i}-${j}`}
               onClick={() => {
-                //in order to not mutate state of grid we use immer
-                const newGrid = produce(grid, (newGrid) => {
-                  //can alter newGrid make an immutable change and make a new grid for us, better than mutating state of original grid -- with this code we can toggle the colored squares on and off
-                  newGrid[i][j] = grid[i][j] ? 0 : 1;
-                });
-                setGrid(newGrid);
+                const newGrid = Array.from(grid);
+                //with this code we can toggle the colored squares on and off
+                newGrid[i][j] = grid[i][j] ? 0 : 1;
+                if (activeGrid === 1) {
+                  setGridOne(newGrid);
+                } else {
+                  setGridTwo(newGrid);
+                }
               }}
               style={{
                 width: 20,
@@ -125,10 +127,51 @@ const Grid = () => {
           ))
         )}
       </div>
-
-      <button onClick={() => {}}>Next Generation</button>
-
+      <button
+        onClick={() => {
+          const griddy = [];
+          for (let i = 0; i < rows; i++) {
+            griddy.push(
+              Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
+            );
+          }
+          if (activeGrid === 1) {
+            setGridOne(griddy);
+          } else {
+            setGridTwo(griddy);
+          }
+        }}
+      >
+        Random
+      </button>
+      <p>Generation Count: {genCount}</p>
       
+      <button
+        onClick={() => {
+          setRunning(!running);
+        }}
+      >
+        {running ? "Stop" : "Start"}
+      </button>
+
+      <button
+        onClick={() => {
+          setRunning(!running);
+          nextGen();
+        }}
+      >
+        One Generation
+      </button>
+
+      <button
+        onClick={() => {
+          setGridOne(emptyGrid())
+          setGridTwo(emptyGrid())
+          setGenCount(0);
+        }}
+      >
+        Clear
+      </button>
     </>
   );
 };
