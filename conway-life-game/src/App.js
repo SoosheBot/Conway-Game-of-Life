@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 // import Nav from "./components/Nav";
 import Grid from "./components/Grid";
-import Simulation from './components/Simulation';
+// import Simulation from './components/Simulation';
 
 
 const App = () => {
@@ -11,8 +11,8 @@ const App = () => {
       {/* <div className="header">
         <Nav />
       </div> */}
-      <Simulation running={false}/>
-      {/* <Grid /> */}
+      {/* <Simulation running={false}/> */}
+      <Grid />
     </div>
   );
 };

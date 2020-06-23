@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 const rows = 5;
 const cols = 5;
@@ -46,7 +46,7 @@ const gameRules = (g) => {
   return newGrid;
 };
 
-const Grid = (props) => {
+const Grid = () => {
   const [gridOne, setGridOne] = useState(() => {
     return emptyGrid();
   });
@@ -57,29 +57,32 @@ const Grid = (props) => {
 
   const [running, setRunning] = useState(false);
 
+
   const [activeGrid, setActiveGrid] = useState(1);
   
-
   const [genCount, setGenCount] = useState(0);
 
 
-  const nextGen = useCallback(() => {
+  const nextGen = () => {
     if (activeGrid === 1) {
       setGridTwo(gameRules(gridOne));
       setActiveGrid(2);
+      setGenCount(genCount + 1);
     } else {
       setGridOne(gameRules(gridTwo));
       setActiveGrid(1);
     }
-  });
+  };
 
   const runSim = () => {
     if (running) {
       return;
     }
-    setGenCount(genCount + 1);
-    // setTimeout()
+    
   };
+
+  
+
 
   const grid = activeGrid === 1 ? gridOne : gridTwo;
 
@@ -132,15 +135,16 @@ const Grid = (props) => {
       >
         Random
       </button>
-      <p>Generation Count: {props.genCount}</p>
+      <p>Generation Count: {genCount}</p>
       <button
                     onClick={() => {
                       setRunning(!running);
-                      runSim()
+                      // runSim()
                       nextGen()
                     }}
                 >
-                    {running ? "Stop" : "Start"}
+                    {/* {running ? "Stop" : "Start"} */}
+                One Generation
                 </button> 
     </>
   );
