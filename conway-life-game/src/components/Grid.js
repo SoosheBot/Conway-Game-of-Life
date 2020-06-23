@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const rows = 5;
-const cols = 5;
+const rows = 25;
+const cols = 25;
 
 const neighborhood = [
   [-1, -1],
@@ -65,10 +65,11 @@ const Grid = () => {
     if (activeGrid === 1) {
       setGridTwo(gameRules(gridOne));
       setActiveGrid(2);
-      setGenCount(genCount + 1);
+      // setGenCount(genCount + 1);
     } else {
       setGridOne(gameRules(gridTwo));
       setActiveGrid(1);
+      setGenCount(genCount + 1);
     }
   };
 
@@ -86,7 +87,7 @@ const Grid = () => {
     if (activeGrid && running) {
       runSim = setInterval(() => {
         nextGen();
-      }, 1000);
+      }, 300);
     } else if (!running) {
       clearInterval(runSim);
       return;
@@ -164,7 +165,8 @@ const Grid = () => {
 
       <button
         onClick={() => {
-          
+          setGridOne(emptyGrid())
+          setGridTwo(emptyGrid())
           setGenCount(0);
         }}
       >
