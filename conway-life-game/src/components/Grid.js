@@ -131,6 +131,7 @@ const Grid = () => {
                   setFrameTwo(newGrid);
                 }
               }}
+              className="active"
               style={{
                 width: 20,
                 height: 20,

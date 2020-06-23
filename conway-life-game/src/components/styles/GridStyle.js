@@ -6,7 +6,6 @@ const GridStyle = styled.div`
     flex-direction:column;
     text-align: center;
     
-
     .grid-wrapper {
         display: flex;
         flex-direction:row;
@@ -37,6 +36,10 @@ const GridStyle = styled.div`
         }
 
       }
+    
+    .active {
+        background-color: #fffff);        
+    }
     
 `;
 
