@@ -94,6 +94,7 @@ function Nav() {
         </ul>
       </div>
       </InfoModal>
+      <button>The Story</button>
     </div>
     </NavStyle>
   );

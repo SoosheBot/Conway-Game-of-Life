@@ -12,6 +12,10 @@ const GridStyle = styled.div`
     justify-content: center;
   }
 
+  .grid-boxes {
+     //to add style in here 
+  }
+
   .button-box {
     display: flex;
     flex-direction: row;
