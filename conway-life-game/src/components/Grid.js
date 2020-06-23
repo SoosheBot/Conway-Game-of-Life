@@ -57,11 +57,9 @@ const Grid = () => {
 
   const [running, setRunning] = useState(false);
 
-
   const [activeGrid, setActiveGrid] = useState(1);
-  
-  const [genCount, setGenCount] = useState(0);
 
+  const [genCount, setGenCount] = useState(0);
 
   const nextGen = () => {
     if (activeGrid === 1) {
@@ -78,29 +76,23 @@ const Grid = () => {
   //   if (!running) {
   //     return;
   //   }
-    
+
   // };
-  
+
   const grid = activeGrid === 1 ? gridOne : gridTwo;
 
   useEffect(() => {
     let runSim = null;
-    // if (activeGrid === 1 || activeGrid === 2) {
-    //   runSim = setInterval(() => {
-    //     // setRunning(running)
-    //     // nextGen()
-    //     console.log("runSim", runSim)
-    //   }, 1000)
-    // } else if (!running && genCount !== 0){
-    //   clearInterval(runSim)
-    // }
-    if (!running) {
-      return
+    if (activeGrid && running) {
+      runSim = setInterval(() => {
+        nextGen();
+      }, 1000);
+    } else if (!running) {
+      clearInterval(runSim);
+      return;
     }
-
-    return () => clearInterval(runSim)
-
-  }, [activeGrid, running])
+    return () => clearInterval(runSim);
+  }, [activeGrid, running]);
 
   return (
     <>
@@ -152,29 +144,32 @@ const Grid = () => {
         Random
       </button>
       <p>Generation Count: {genCount}</p>
+      
       <button
-                    onClick={() => {
-                      setRunning(!running);
-                      
-                    }}
-                >
-                    {activeGrid ? "Stop" : "Start"}
-                </button> 
+        onClick={() => {
+          setRunning(!running);
+        }}
+      >
+        {running ? "Stop" : "Start"}
+      </button>
+
       <button
-                    onClick={() => {
-                      setRunning(!running);
-                      // runSim()
-                      nextGen()
-                    }}
-                >
-                    {/* {running ? "Stop" : "Start"} */}
-                One Generation
-                </button> 
-                <button onClick={() => {
-                  setGridOne(emptyGrid())
-                  setGridTwo(emptyGrid())
-                  setGenCount(0)
-                }}>Clear</button>
+        onClick={() => {
+          setRunning(!running);
+          nextGen();
+        }}
+      >
+        One Generation
+      </button>
+
+      <button
+        onClick={() => {
+          
+          setGenCount(0);
+        }}
+      >
+        Clear
+      </button>
     </>
   );
 };
