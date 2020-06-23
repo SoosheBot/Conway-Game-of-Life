@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Dropdown from './Dropdown';
-
+import NavStyle from './styles/NavStyle';
 
 const RulesModal = ({ children, showRules, setShowRules }) => {
+
   const rulesContent = showRules && (
     <div className="overlay">
       <div className="modal">
@@ -11,7 +12,7 @@ const RulesModal = ({ children, showRules, setShowRules }) => {
           type="button"
           onClick={() => setShowRules(false)}
         >
-          Close
+          CLOSE
         </button>
         <div className="modal-body">{children}</div>
       </div>
@@ -30,7 +31,7 @@ const InfoModal = ({ children, showInfo, setShowInfo }) => {
           type="button"
           onClick={() => setShowInfo(false)}
         >
-          Close
+          CLOSE
         </button>
         <div className="modal-body">{children}</div>
       </div>
@@ -44,7 +45,7 @@ function Nav() {
   const [showRules, setShowRules] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   return (
-    
+    <NavStyle>
     <div className="nav-wrapper">
       <h1>John Conway's Game of Life</h1>
       <button type="button" onClick={() => setShowRules(true)}>
@@ -90,6 +91,7 @@ function Nav() {
       </InfoModal>
       <Dropdown />
     </div>
+    </NavStyle>
   );
 }
 
