@@ -52,17 +52,6 @@ The initial pattern constitutes the 'seed' of the system. The first generation i
 * React
 * Javascript
 * HTML/CSS
-* Heroku
-
-
-## Quick Start -- React App + Heroku (Mac)
-```
-1. Create App: npx create-react-app $APP_NAME (replace $APP_NAME with your app's name)
-2. Enter App Directory: cd $APP_NAME
-3. Login to Heroku: heroku login
-4. Create Heroku App: heroku create $APP_NAME --buildpack mars/create-react-app (replace $APP_NAME with your app's name)
-4. Deploy: git push heroku master
-5. Open: heroku open
-```
+* Netlify
 
 
