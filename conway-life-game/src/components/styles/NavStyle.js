@@ -27,7 +27,7 @@ const NavStyle = styled.div`
 }
 
 .modal {
-  // z-index: 79;
+  z-index: 99;
   /* Everything below is optional styling */
   position: relative;
   width: 100%;
@@ -40,7 +40,6 @@ const NavStyle = styled.div`
   position: absolute;
   top: -20px;
   right: 0;
-  // padding: 5px;
   border: 0;
   -webkit-appearance: none;
   background: none;
@@ -60,6 +59,13 @@ button {
   margin: 10px;
   padding: 15px;
 
+}
+
+@media only screen and (max-width: 600px) {
+     
+  .nav-wrapper {
+      flex-wrap:wrap;
+  }
 }
 `;
 

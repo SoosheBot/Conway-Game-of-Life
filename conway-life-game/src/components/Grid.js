@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from './styles/GridStyle';
+// import Dropdown from './Dropdown';
 
 //boundaries of the grid
 const rows = 25;
-const cols = 25;
+const cols = 45;
 
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
@@ -55,7 +56,7 @@ const gameRules = (g) => {
 
 const Grid = () => {
   //Initial grid state one (to set up double buffering)
-  const [frameOne, setframeOne] = useState(() => {
+  const [frameOne, setFrameOne] = useState(() => {
     return emptyGrid();
   });
 
@@ -74,7 +75,7 @@ const Grid = () => {
   const [genCount, setGenCount] = useState(0);
 
   // Speed of the simulation initial state
-  const [speed, setSpeed] = useState(1000)
+  const [speed, setSpeed] = useState(300)
     
   // set speed reference for simulation
   const speedRef = useRef(speed);
@@ -141,6 +142,7 @@ const Grid = () => {
         )}
       </div>
       <div className="button-box">
+      {/* <Dropdown /> */}
       <button
         onClick={() => {
           const clearedGrid = [];
@@ -165,6 +167,18 @@ const Grid = () => {
         }}
       >
         {running ? "Stop" : "Start"}
+      </button>
+
+      <button onClick={() => {
+        setSpeed(100)
+      }}>
+        Speed Up
+      </button>
+
+      <button onClick={() => {
+        setSpeed(1000)
+      }}>
+        Slow Down
       </button>
 
       <button
