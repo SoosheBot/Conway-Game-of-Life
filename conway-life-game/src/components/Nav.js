@@ -87,6 +87,12 @@ function Nav() {
       <InfoModal showInfo={showInfo} setShowInfo={setShowInfo}>
       <div>
         <h3>What do the Buttons do?</h3>
+        <ul>
+          <li><strong>RANDOM: </strong> Displays a random pattern of cells.</li>
+          <li><strong>START/STOP: </strong> Runs the simulation automatically. You should add a couple of cells or select the Random button before doing this. Note: You cannot add more cells once you have started, but you can stop to add more, if you like.</li>
+          <li><strong>ONE GENERATION: </strong> Grows the cell pattern by one generation per click.</li>
+          <li><strong>CLEAR: </strong> Resets the generation counter and clears the screen.</li>
+        </ul>
       </div>
       </InfoModal>
       <Dropdown />

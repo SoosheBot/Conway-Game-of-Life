@@ -55,12 +55,12 @@ const gameRules = (g) => {
 
 const Grid = () => {
   //Initial grid state one (to set up double buffering)
-  const [gridOne, setGridOne] = useState(() => {
+  const [frameOne, setframeOne] = useState(() => {
     return emptyGrid();
   });
 
   // Initial grid state two (to set up double buffering)
-  const [gridTwo, setGridTwo] = useState(() => {
+  const [frameTwo, setFrameTwo] = useState(() => {
     return emptyGrid();
   });
 
@@ -80,20 +80,20 @@ const Grid = () => {
   const speedRef = useRef(speed);
       speedRef.current = speed;
 
-  // Double buffer -- when the active grid is 1, we set gridOne's state into the gameRules function, and set that into gridTwo. Else, if gridTwo is active, we set it into the gameRules, and put that setup inside setGridOne's state so it is ready to be handed off. We also put the generation counter here.
+  // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
     if (activeGrid === 1) {
-      setGridTwo(gameRules(gridOne));
+      setFrameTwo(gameRules(frameOne));
       setActiveGrid(2);
     } else {
-      setGridOne(gameRules(gridTwo));
+      setFrameOne(gameRules(frameTwo));
       setActiveGrid(1);
       setGenCount(genCount + 1);
     }
   };
 
-  // Ternary operator to set a const of grid to the activeGrid state. If the grid is active it will be active on gridOne or gridTwo
-  const grid = activeGrid === 1 ? gridOne : gridTwo;
+  // Ternary operator to set a const of grid to the activeGrid state. If the grid is active it will be active on frameOne or frameTwo
+  const grid = activeGrid === 1 ? frameOne : frameTwo;
 
   // The simulation -- 
   useEffect(() => {
@@ -125,9 +125,9 @@ const Grid = () => {
                 const newGrid = Array.from(grid);
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
                 if (activeGrid === 1) {
-                  setGridOne(newGrid);
+                  setFrameOne(newGrid);
                 } else {
-                  setGridTwo(newGrid);
+                  setFrameTwo(newGrid);
                 }
               }}
               style={{
@@ -140,6 +140,7 @@ const Grid = () => {
           ))
         )}
       </div>
+      <div className="button-box">
       <button
         onClick={() => {
           const clearedGrid = [];
@@ -149,9 +150,9 @@ const Grid = () => {
             );
           }
           if (activeGrid === 1) {
-            setGridOne(clearedGrid);
+            setFrameOne(clearedGrid);
           } else {
-            setGridTwo(clearedGrid);
+            setFrameTwo(clearedGrid);
           }
         }}
       >
@@ -176,14 +177,16 @@ const Grid = () => {
 
       <button
         onClick={() => {
-          setGridOne(emptyGrid())
-          setGridTwo(emptyGrid())
+          setFrameOne(emptyGrid())
+          setFrameTwo(emptyGrid())
           setGenCount(0);
         }}
       >
         Clear
       </button>
       <p>Generation Count: {genCount}</p>
+      </div>
+      
     </GridStyle>
   );
 };
