@@ -13,4 +13,22 @@ function DropDown() {
     );
   }
 
+  // <button
+  //       onClick={() => {
+  //         const clearedGrid = [];
+  //         for (let i = 0; i < rows; i++) {
+  //           clearedGrid.push(
+  //             Array.from(Array(cols), () => (Math.() > 0.7 ? 1 : 0))
+  //           );
+  //         }
+  //         if (activeGrid === 1) {
+  //           setFrameOne(clearedGrid);
+  //         } else {
+  //           setFrameTwo(clearedGrid);
+  //         }
+  //       }}
+  //     >
+  //       Glider
+  //     </button>
+
 export default DropDown;

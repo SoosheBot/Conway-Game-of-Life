@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GridStyle from './styles/GridStyle';
+import GridStyle from "./styles/GridStyle";
 // import Dropdown from './Dropdown';
 
 //boundaries of the grid
@@ -27,9 +27,9 @@ const emptyGrid = () => {
   return clearedGrid;
 };
 
-// Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above). 
+// Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above).
 const gameRules = (g) => {
-  let newGrid = emptyGrid(); 
+  let newGrid = emptyGrid();
   // Then we have nested for loops to iterate over the neighborhood cells by the rows and cols we set up initially
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
@@ -75,11 +75,11 @@ const Grid = () => {
   const [genCount, setGenCount] = useState(0);
 
   // Speed of the simulation initial state
-  const [speed, setSpeed] = useState(300)
-    
+  const [speed, setSpeed] = useState(300);
+
   // set speed reference for simulation
   const speedRef = useRef(speed);
-      speedRef.current = speed;
+  speedRef.current = speed;
 
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
@@ -96,7 +96,7 @@ const Grid = () => {
   // Ternary operator to set a const of grid to the activeGrid state. If the grid is active it will be active on frameOne or frameTwo
   const grid = activeGrid === 1 ? frameOne : frameTwo;
 
-  // The simulation -- 
+  // The simulation --
   useEffect(() => {
     let runSim = null;
     if (activeGrid && running) {
@@ -112,16 +112,27 @@ const Grid = () => {
 
   return (
     <GridStyle>
-      <div className="grid-wrapper"
+      <div
+        className="grid-wrapper"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, 20px)`,
+      //     "--color-1": "darkslategrey",
+      //     "--color-2": "teal",
+      //     background: `
+      //     linear-gradient(
+      //     170deg,
+      //     var(--color-1),
+      //     var(--color-2) 80%
+      //   )
+      // `,
         }}
       >
         {grid.map((row, i) =>
           row.map((col, j) => (
             <div
               key={`${i}-${j}`}
+              className="grid-boxes"
               onClick={() => {
                 const newGrid = Array.from(grid);
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
@@ -131,7 +142,6 @@ const Grid = () => {
                   setFrameTwo(newGrid);
                 }
               }}
-              className="active"
               style={{
                 width: 20,
                 height: 20,
@@ -143,65 +153,69 @@ const Grid = () => {
         )}
       </div>
       <div className="button-box">
-      {/* <Dropdown /> */}
-      <button
-        onClick={() => {
-          const clearedGrid = [];
-          for (let i = 0; i < rows; i++) {
-            clearedGrid.push(
-              Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
-            );
-          }
-          if (activeGrid === 1) {
-            setFrameOne(clearedGrid);
-          } else {
-            setFrameTwo(clearedGrid);
-          }
-        }}
-      >
-        Random
-      </button>
-      
-      <button
-        onClick={() => {
-          setRunning(!running);
-        }}
-      >
-        {running ? "Stop" : "Start"}
-      </button>
+        {/* <Dropdown /> */}
 
-      <button onClick={() => {
-        setSpeed(100)
-      }}>
-        Speed Up
-      </button>
+        <button
+          onClick={() => {
+            const clearedGrid = [];
+            for (let i = 0; i < rows; i++) {
+              clearedGrid.push(
+                Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
+              );
+            }
+            if (activeGrid === 1) {
+              setFrameOne(clearedGrid);
+            } else {
+              setFrameTwo(clearedGrid);
+            }
+          }}
+        >
+          Random
+        </button>
 
-      <button onClick={() => {
-        setSpeed(1000)
-      }}>
-        Slow Down
-      </button>
+        <button
+          onClick={() => {
+            setRunning(!running);
+          }}
+        >
+          {running ? "Stop" : "Start"}
+        </button>
 
-      <button
-        onClick={() => {
-          nextGen();
-        }}
-      >
-        One Generation
-      </button>
+        <button
+          onClick={() => {
+            setSpeed(100);
+          }}
+        >
+          Speed Up
+        </button>
 
-      <button
-        onClick={() => {
-          setFrameOne(emptyGrid())
-          setFrameTwo(emptyGrid())
-          setGenCount(0);
-        }}
-      >
-        Clear
-      </button>
-      <p>Generation Count: {genCount}</p>
+        <button
+          onClick={() => {
+            setSpeed(1000);
+          }}
+        >
+          Slow Down
+        </button>
+
+        <button
+          onClick={() => {
+            nextGen();
+          }}
+        >
+          One Generation
+        </button>
+
+        <button
+          onClick={() => {
+            setFrameOne(emptyGrid());
+            setFrameTwo(emptyGrid());
+            setGenCount(0);
+          }}
+        >
+          Clear
+        </button>
+        <p>Generation Count: {genCount}</p>
       </div>
-      
     </GridStyle>
   );
 };
