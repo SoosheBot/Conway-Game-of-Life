@@ -74,17 +74,33 @@ const Grid = () => {
     }
   };
 
-  const runSim = () => {
-    if (running) {
-      return;
-    }
+  // const runSim = () => {
+  //   if (!running) {
+  //     return;
+  //   }
     
-  };
-
+  // };
   
-
-
   const grid = activeGrid === 1 ? gridOne : gridTwo;
+
+  useEffect(() => {
+    let runSim = null;
+    // if (activeGrid === 1 || activeGrid === 2) {
+    //   runSim = setInterval(() => {
+    //     // setRunning(running)
+    //     // nextGen()
+    //     console.log("runSim", runSim)
+    //   }, 1000)
+    // } else if (!running && genCount !== 0){
+    //   clearInterval(runSim)
+    // }
+    if (!running) {
+      return
+    }
+
+    return () => clearInterval(runSim)
+
+  }, [activeGrid, running])
 
   return (
     <>
@@ -139,6 +155,14 @@ const Grid = () => {
       <button
                     onClick={() => {
                       setRunning(!running);
+                      
+                    }}
+                >
+                    {activeGrid ? "Stop" : "Start"}
+                </button> 
+      <button
+                    onClick={() => {
+                      setRunning(!running);
                       // runSim()
                       nextGen()
                     }}
@@ -146,6 +170,11 @@ const Grid = () => {
                     {/* {running ? "Stop" : "Start"} */}
                 One Generation
                 </button> 
+                <button onClick={() => {
+                  setGridOne(emptyGrid())
+                  setGridTwo(emptyGrid())
+                  setGenCount(0)
+                }}>Clear</button>
     </>
   );
 };
