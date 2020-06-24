@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 
 const BlogStyle = styled.div`
-z-index: -1
 .blog-title {
     margin-left: 5%;
     display:flex;

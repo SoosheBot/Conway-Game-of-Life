@@ -13,7 +13,12 @@ function Blog() {
     "I briefly considered trying Canvas again, but found the logic little too painfully confusing to pick up, and at this point had basically got most of my code written out. It was just a matter of figuring out where/how to use a double buffer";
   const text3 =
     "Picture this: You have a rotating stage with two sides, and every time there's a new scene, the stage rotates from SideA to SideB, then back to SideA, then back to SideB. When the actors are all on SideA, the stage crew works frantically and seeeecretly on SideB to set up the stage for the next scene. When the stage rotates to SideB, the stage crew work frantically and seeeecretly to get SideA ready for the next scene. That's it. That's what the double buffer is. It is the stage crew working in the background to set up the next scene. This is super helpful for things like video games, where the pixels of the scene render seamlessly instead of you having to watch every pixel build up to the full image. For Conway's Game, it means the cellular automata crawls across the screen smoothly and without any weird jerkiness to the rendering. I set up the double buffer in a function that held an if/else statement. The if/else basically said 'if we're on SideA, setup state, etc for SideB, else, you're probably on SideB so set state for SideA.'";
-  const text4 = "text";
+  const text4 =
+    "After setting up a game rules function (where I set up the rules of how the cells can move, and *where* they can move), I incorporated my double buffer a couple of places. 1. Into the return statement (where I mapped through the grid to display the active/alive cells when the simulation started running) and 2. Into the RANDOMbutton's onClick.";
+  const text5 =
+    "Speaking of simulations, everything I did above worked for creating an automaton YAY! But it only moved one generation BOO! I was happy to see it working, but I wanted to build a feature to have the automata travel automatically. In order to do that, I created a useEffect hook with a setInterval to flipflop back and forth between the two. Since it. Finally, in order to control the speed of the animation, I set up a useRef inside the useEffect, and tied different buttons to different speeds in the function's return.";
+  const text6 =
+    "Conway's Game of Life is is the best-known example of cellular automation. It is a zero-player game, meaning, once a player enters an initial input, the game runs itself by evolving. Cellular automata are a class of mathematical objects that has a space of cells, and a set of allowed states for each of cell.";
   const [collapse, setCollapse] = useState(true);
   const [expand, setExpand] = useState("Read All");
   const [icon, setIcon] = useState("fa fa-chevron-right");
@@ -50,11 +55,17 @@ function Blog() {
         >
           <span>{text3}</span>
         </CollapsiblePanel>
+        <CollapsiblePanel expand="Rules of the road" collapse={collapse}>
+          <span>{text4}</span>
+        </CollapsiblePanel>
         <CollapsiblePanel
           expand="Let it go, let it go go go"
           collapse={collapse}
         >
-          <span>{text4}</span>
+          <span>{text5}</span>
+        </CollapsiblePanel>
+        <CollapsiblePanel expand="Field notes" collapse={collapse}>
+          <span>{text6}</span>
         </CollapsiblePanel>
       </div>
     </BlogStyle>

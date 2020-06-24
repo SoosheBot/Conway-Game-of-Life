@@ -76,7 +76,7 @@ function Nav() {
           </sup>
           <h3>How to Play</h3>
           <ul>
-              <li>Create a few cells by clicking on the grid. Remember: If the cell has fewer than two living neighbor cells, it will die immediately in the next generation. If your cell has more than three neighbors, it will die immediately in the next generation.</li>
+              <li>Create a few living cells by clicking on the grid. Remember: If the cell has fewer than two living neighbor cells, it will die immediately in the next generation. If your cell has more than three neighbors, it will die immediately in the next generation.</li>
               <li>Click the <strong>Start</strong> button to watch the cells evolve automatically.</li>
               <li>Click the <strong>Next Generation</strong> button to watch the cell evolve one generation at a time.</li>
               <li>Click the <strong>Stop</strong> button to pause the game.</li>
