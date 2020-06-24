@@ -4,16 +4,16 @@ import NavStyle from './styles/NavStyle';
 const RulesModal = ({ children, showRules, setShowRules }) => {
 
   const rulesContent = showRules && (
-    <div className="overlay">
-      <div className="modal">
+    <div className="nav-overlay">
+      <div className="nav-modal">
         <button
-          className="close-modal"
+          className="close-nav-modal"
           type="button"
           onClick={() => setShowRules(false)}
         >
           CLOSE
         </button>
-        <div className="modal-body">{children}</div>
+        <div className="nav-modal-body">{children}</div>
       </div>
     </div>
   );
@@ -23,16 +23,16 @@ const RulesModal = ({ children, showRules, setShowRules }) => {
 
 const InfoModal = ({ children, showInfo, setShowInfo }) => {
   const infoContent = showInfo && (
-    <div className="overlay">
-      <div className="modal">
+    <div className="nav-overlay">
+      <div className="nav-modal">
         <button
-          className="close-modal"
+          className="close-nav-modal"
           type="button"
           onClick={() => setShowInfo(false)}
         >
           CLOSE
         </button>
-        <div className="modal-body">{children}</div>
+        <div className="nav-modal-body">{children}</div>
       </div>
     </div>
   );

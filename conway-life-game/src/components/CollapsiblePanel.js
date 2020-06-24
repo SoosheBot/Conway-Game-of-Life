@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Collapse } from "reactstrap";
+import BlogStyle from './styles/BlogStyle';
+
 
 function CollapsiblePanel({ children, ...props }) {
-  const { title, collapse } = props;
+  const { expand, collapse } = props;
   const [isCollapse, setIsCollapse] = useState(collapse);
   const [icon, setIcon] = useState("fa fa-chevron-down");
   const toggle = () => {
@@ -28,24 +30,26 @@ function CollapsiblePanel({ children, ...props }) {
   }, [collapse]);
 
   return (
+      <BlogStyle>
     <div className="coll-panel">
       <button
         type="button"
         className="coll-panel-btn btn-primary btn-block text-left"
         onClick={() => toggle()}
       >
-        <i className={icon} /> {title}
+        <i className={icon} /> {expand}
       </button>
       <Collapse className="border text-left p-2" isOpen={isCollapse}>
         {children}
       </Collapse>
     </div>
+    </BlogStyle>
   );
 }
 
 CollapsiblePanel.defaultProps = {
   children: "Add node as a child",
-  title: "Collapsible Panel",
+  expand: "Collapsible Panel",
   collapse: true
 };
 

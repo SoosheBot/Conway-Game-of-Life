@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from "./styles/GridStyle";
 // import Dropdown from './Dropdown';
+import Blog from './Blog';
 
 //boundaries of the grid
 const rows = 25;
@@ -55,11 +56,11 @@ const gameRules = (g) => {
 };
 
 //preselect some colors
-const colors = {
-  Sea: '#a2ccb6',
-  Sand: '#fceeb5',
-  Peach: '#ee786e',
-}
+// const colors = {
+//   Sea: '#a2ccb6',
+//   Sand: '#fceeb5',
+//   Peach: '#ee786e',
+// }
 
 const Grid = () => {
   //Initial grid state one (to set up double buffering)
@@ -214,6 +215,7 @@ const Grid = () => {
         </button>
         <p>Generation Count: {genCount}</p>
       </div>
+      <Blog />
     </GridStyle>
   );
 };

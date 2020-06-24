@@ -2,28 +2,29 @@ import styled from "styled-components";
 
 
 const BlogStyle = styled.div`
-margin-top: 1.5rem;
-font-style: Helvetica;
-// display:flex;
-flex-direction:row;
-align-items:center;
-justify-content:center;
-
-// .coll-panel-btn:focus {
-//     outline: 0;
-//     box-shadow: none;
-// }
-
+z-index: -1
+.blog-title {
+    margin-left: 5%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;   
+}
 .blog-button-box {
-    // display: flex;
-    // flex-direction: column;
-    align-items:center;
-    justify-content:center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
 }
 
-// .button {
-//     width:100%;
-// }
+.blog-button {
+    margin-top: 0.5%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.coll-panel {
+    width: 85%;
+    margin-left: 5%
+}
 `;
 
 

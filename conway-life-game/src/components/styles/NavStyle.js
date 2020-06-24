@@ -12,8 +12,8 @@ const NavStyle = styled.div`
   align-items: center;
 }
 
-.overlay {
-  z-index: 98;
+.nav-overlay {
+  z-index: 99;
   position: fixed;
   top: 0;
   right: 0;
@@ -27,7 +27,7 @@ const NavStyle = styled.div`
   background-color: rgba(24, 24, 24, 0.3);
 }
 
-.modal {
+.nav-modal {
   z-index: 99;
   /* Everything below is optional styling */
   position: relative;
@@ -37,19 +37,19 @@ const NavStyle = styled.div`
   margin: 0 auto;
 }
 
-.close-modal {
+.close-nav-modal {
   position: absolute;
-  top: -20px;
+  top: 0px;
   right: 0;
   border: 0;
   -webkit-appearance: none;
   background: none;
   color: red;
   font-weight: bold;
-  cursor: pointer;
+  // cursor: pointer;
 }
 
-.modal-body {
+.nav-modal-body {
   padding: 20px 24px;
   border-radius: 4px;
   background-color: white;
@@ -62,8 +62,7 @@ button {
 
 }
 
-@media only screen and (max-width: 600px) {
-     
+@media only screen and (max-width: 600px) {   
   .nav-wrapper {
       flex-wrap:wrap;
   }
