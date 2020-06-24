@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from "./styles/GridStyle";
-// import Dropdown from './Dropdown';
-import Blog from './Blog';
+import Dropdown from './Dropdown';
+
 
 //boundaries of the grid
 const rows = 25;
@@ -62,7 +62,7 @@ const gameRules = (g) => {
 //   Peach: '#ee786e',
 // }
 
-const Grid = () => {
+const Grid = (props) => {
   //Initial grid state one (to set up double buffering)
   const [frameOne, setFrameOne] = useState(() => {
     return emptyGrid();
@@ -152,7 +152,7 @@ const Grid = () => {
         )}
       </div>
       <div className="button-box">
-        {/* <Dropdown /> */}
+        <Dropdown props={props}/>
 
         <button
           onClick={() => {
@@ -171,6 +171,25 @@ const Grid = () => {
         >
           Random
         </button>
+
+
+          {/* <button onClick={() => {
+                    const newGrid = Array.from(grid);
+                    newGrid[1][3] = 1
+  newGrid[2][3] = 1
+  newGrid[3][3] = 1
+  newGrid[3][2] = 1
+  newGrid[2][1] = 1
+                    if (activeGrid === 1) {
+                      setFrameOne(newGrid);
+                    } else {
+                      setFrameTwo(newGrid);
+                    }
+                  }}
+                >Glider</button> */}
+
+
+
 
         <button
           onClick={() => {
@@ -215,7 +234,6 @@ const Grid = () => {
         </button>
         <p>Generation Count: {genCount}</p>
       </div>
-      <Blog />
     </GridStyle>
   );
 };
