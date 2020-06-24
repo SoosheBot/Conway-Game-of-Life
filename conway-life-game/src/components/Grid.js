@@ -144,24 +144,6 @@ const Grid = (props) => {
       </div>
       <h3 className="gen-count">Generation Count: {genCount}</h3>
       <div className="button-box">
-      
-        <button
-          onClick={() => {
-            const clearedGrid = [];
-            for (let i = 0; i < rows; i++) {
-              clearedGrid.push(
-                Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
-              );
-            }
-            if (activeGrid === 1) {
-              setFrameOne(clearedGrid);
-            } else {
-              setFrameTwo(clearedGrid);
-            }
-          }}
-        >
-          Random
-        </button>
         <button
           onClick={() => {
             setRunning(!running);
@@ -225,11 +207,15 @@ const Grid = (props) => {
         <button
           onClick={() => {
             const newGrid = Array.from(grid);
-            newGrid[1][3] = 1;
-            newGrid[2][3] = 1;
-            newGrid[3][3] = 1;
-            newGrid[3][2] = 1;
-            newGrid[2][1] = 1;
+            newGrid[8][24] = 1;
+            newGrid[10][24] = 1;
+            newGrid[11][23] = 1;
+            newGrid[11][22] = 1;
+            newGrid[11][21] = 1;
+            newGrid[11][20] = 1;
+            newGrid[10][20] = 1;
+            newGrid[9][20] = 1;
+            newGrid[8][21] = 1;
             if (activeGrid === 1) {
               setFrameOne(newGrid);
             } else {
@@ -237,7 +223,24 @@ const Grid = (props) => {
             }
           }}
         >
-          Pulsar
+          Lightweight Spaceship (LWSS)
+        </button>
+        <button
+          onClick={() => {
+            const clearedGrid = [];
+            for (let i = 0; i < rows; i++) {
+              clearedGrid.push(
+                Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
+              );
+            }
+            if (activeGrid === 1) {
+              setFrameOne(clearedGrid);
+            } else {
+              setFrameTwo(clearedGrid);
+            }
+          }}
+        >
+          Random
         </button>
         
         </div>
