@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from "./styles/GridStyle";
-import Dropdown from './Dropdown';
-
 
 //boundaries of the grid
 const rows = 25;
@@ -55,13 +53,6 @@ const gameRules = (g) => {
   return newGrid;
 };
 
-//preselect some colors
-// const colors = {
-//   Sea: '#a2ccb6',
-//   Sand: '#fceeb5',
-//   Peach: '#ee786e',
-// }
-
 const Grid = (props) => {
   //Initial grid state one (to set up double buffering)
   const [frameOne, setFrameOne] = useState(() => {
@@ -88,7 +79,7 @@ const Grid = (props) => {
   // set speed reference for simulation
   const speedRef = useRef(speed);
   speedRef.current = speed;
-  
+
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
     if (activeGrid === 1) {
@@ -151,9 +142,9 @@ const Grid = (props) => {
           ))
         )}
       </div>
+      <h3 className="gen-count">Generation Count: {genCount}</h3>
       <div className="button-box">
-        <Dropdown props={props}/>
-
+      
         <button
           onClick={() => {
             const clearedGrid = [];
@@ -171,26 +162,6 @@ const Grid = (props) => {
         >
           Random
         </button>
-
-
-          {/* <button onClick={() => {
-                    const newGrid = Array.from(grid);
-                    newGrid[1][3] = 1
-  newGrid[2][3] = 1
-  newGrid[3][3] = 1
-  newGrid[3][2] = 1
-  newGrid[2][1] = 1
-                    if (activeGrid === 1) {
-                      setFrameOne(newGrid);
-                    } else {
-                      setFrameTwo(newGrid);
-                    }
-                  }}
-                >Glider</button> */}
-
-
-
-
         <button
           onClick={() => {
             setRunning(!running);
@@ -232,8 +203,46 @@ const Grid = (props) => {
         >
           Clear
         </button>
-        <p>Generation Count: {genCount}</p>
-      </div>
+        </div>
+        <div className="pattern-button-box">
+        <button
+          onClick={() => {
+            const newGrid = Array.from(grid);
+            newGrid[1][3] = 1;
+            newGrid[2][3] = 1;
+            newGrid[3][3] = 1;
+            newGrid[3][2] = 1;
+            newGrid[2][1] = 1;
+            if (activeGrid === 1) {
+              setFrameOne(newGrid);
+            } else {
+              setFrameTwo(newGrid);
+            }
+          }}
+        >
+          Glider
+        </button>
+        <button
+          onClick={() => {
+            const newGrid = Array.from(grid);
+            newGrid[1][3] = 1;
+            newGrid[2][3] = 1;
+            newGrid[3][3] = 1;
+            newGrid[3][2] = 1;
+            newGrid[2][1] = 1;
+            if (activeGrid === 1) {
+              setFrameOne(newGrid);
+            } else {
+              setFrameTwo(newGrid);
+            }
+          }}
+        >
+          Pulsar
+        </button>
+        
+        </div>
+        
+      
     </GridStyle>
   );
 };

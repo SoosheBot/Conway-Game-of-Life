@@ -21,28 +21,26 @@ const GridStyle = styled.div`
     // }
   }
 
-  
-
-  
+  .gen-count {
+    margin: 2%;
+    font-weight: bold;
+    text-align: center
+  }
 
   .button-box {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
-    button {
+  }
+
+  button {
       border-radius: 5px;
-      margin: 10px;
-      padding: 15px;
+      margin: 1%;
+      padding: 1%;
     }
-  }
-
-  p {
-    font-weight: bold;
-  }
-
-  
 
   @media only screen and (max-width: 600px) {
     .button-box {
