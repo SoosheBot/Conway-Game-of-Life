@@ -5,16 +5,25 @@ const GridStyle = styled.div`
   flex-direction: column;
   text-align: center;
 
+
+
   .grid-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
   }
 
-  .grid-boxes {
-     //to add style in here 
+    // .grid-boxes {
+    //   color: #fff;
+    //   animation: background-color 1s ease-in-out infinite;
+    // }
   }
+
+  
+
+  
 
   .button-box {
     display: flex;
@@ -32,6 +41,8 @@ const GridStyle = styled.div`
   p {
     font-weight: bold;
   }
+
+  
 
   @media only screen and (max-width: 600px) {
     .button-box {

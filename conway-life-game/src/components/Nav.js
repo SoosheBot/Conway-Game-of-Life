@@ -40,9 +40,11 @@ const InfoModal = ({ children, showInfo, setShowInfo }) => {
   return infoContent;
 };
 
+
 function Nav() {
   const [showRules, setShowRules] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+
   return (
     <NavStyle>
     <div className="nav-wrapper">
@@ -94,7 +96,6 @@ function Nav() {
         </ul>
       </div>
       </InfoModal>
-      <button>The Story</button>
     </div>
     </NavStyle>
   );

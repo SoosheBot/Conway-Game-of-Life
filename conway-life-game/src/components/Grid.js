@@ -4,7 +4,7 @@ import GridStyle from "./styles/GridStyle";
 
 //boundaries of the grid
 const rows = 25;
-const cols = 45;
+const cols = 25;
 
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
@@ -30,7 +30,7 @@ const emptyGrid = () => {
 // Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above).
 const gameRules = (g) => {
   let newGrid = emptyGrid();
-  // Then we have nested for loops to iterate over the neighborhood cells by the rows and cols we set up initially
+  // Then we have nested for loops to iterate over the neighborhood cells by the rows and cols we set up initially.
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       let neighbors = 0;
@@ -41,7 +41,7 @@ const gameRules = (g) => {
           neighbors += g[blocX][blocY];
         }
       });
-      // Once we have set up how the board works, we then implement the actual rules of the game in the following if/else statements
+      // Once we have set up how the cells work on the board, we then implement the actual rules of how the cells travel across the board.
       if (neighbors < 2 || neighbors > 3) {
         newGrid[i][j] = 0;
       } else if (g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
@@ -53,6 +53,13 @@ const gameRules = (g) => {
   }
   return newGrid;
 };
+
+//preselect some colors
+const colors = {
+  Sea: '#a2ccb6',
+  Sand: '#fceeb5',
+  Peach: '#ee786e',
+}
 
 const Grid = () => {
   //Initial grid state one (to set up double buffering)
@@ -80,7 +87,7 @@ const Grid = () => {
   // set speed reference for simulation
   const speedRef = useRef(speed);
   speedRef.current = speed;
-
+  
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
     if (activeGrid === 1) {
@@ -117,22 +124,13 @@ const Grid = () => {
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, 20px)`,
-      //     "--color-1": "darkslategrey",
-      //     "--color-2": "teal",
-      //     background: `
-      //     linear-gradient(
-      //     170deg,
-      //     var(--color-1),
-      //     var(--color-2) 80%
-      //   )
-      // `,
         }}
       >
         {grid.map((row, i) =>
           row.map((col, j) => (
             <div
-              key={`${i}-${j}`}
               className="grid-boxes"
+              key={`${i}-${j}`}
               onClick={() => {
                 const newGrid = Array.from(grid);
                 newGrid[i][j] = grid[i][j] ? 0 : 1;

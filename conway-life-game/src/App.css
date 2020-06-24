@@ -1,5 +1,17 @@
-/* .App {
-  text-align: center;
+.App {
+  display:flex;
+}
+
+/* .body {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.grid-bod {
+  flex-wrap: wrap;
 } */
 
 /* @media (prefers-reduced-motion: no-preference) {

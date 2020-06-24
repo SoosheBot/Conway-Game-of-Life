@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const NavStyle = styled.div`
 .nav-wrapper {
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-direction: row;
