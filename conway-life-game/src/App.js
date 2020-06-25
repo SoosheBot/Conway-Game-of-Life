@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import Nav from "./components/Nav";
 import Grid from "./components/Grid";
 import Blog from "./components/Blog";

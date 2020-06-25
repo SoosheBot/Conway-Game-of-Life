@@ -28,7 +28,7 @@ const BlogStyle = styled.div`
 
 .btn-primary {
     background-color:#246655;
-    border-color:#a4f1de;
+    border-color:#38a085;
     box-shadow: 0 10px 25px
     
 }

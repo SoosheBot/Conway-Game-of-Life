@@ -126,7 +126,6 @@ const Grid = (props) => {
           row.map((col, j) => (
             <div
               className={grid[i][j] ? "grid-boxes" : ""}
-              // className="grid-boxes"
               key={`${i}-${j}`}
               onClick={() => {
                 if (running) {
@@ -144,7 +143,7 @@ const Grid = (props) => {
                 width: 20,
                 height: 20,
                 backgroundColor: grid[i][j] ? "purple" : undefined,
-                border: "solid 1px black",
+                border: "dashed 1px black",
               }}
             />
           ))

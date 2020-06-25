@@ -7,28 +7,28 @@ const GridStyle = styled.div`
   text-align: center;
 
   .grid-wrapper {
-    margin-left:5%;
-    margin-right:10%;
+    margin-left:15%;
+    margin-right:20%;
+
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color:slategrey;   
+    background-color:#758b85;   
     box-shadow: 0 10px 25px;
+    border-radius: 5px;
   }
 
-    .grid-boxes {
-      background: grey;
-      border-radius: 10px;
+    .grid-boxes {    
       box-shadow: 0 10px 25px rgba(0,0,0,.5), 0 -5px 20px rgba(0,0,0,.3);
-      // background: linear-gradient(270deg, #246655, #a4f1de);
+      border-radius:10px;
       animation-name: example;
       animation: example 1s ease infinite;
 
 
       @keyframes example {
-        from {background-color:#246655;}
-        to {background-color:#a4f1de;}        
+        from {background-color:#1a493d;}
+        to {background-color:#38a085;}      
       }
       
     
