@@ -11,7 +11,7 @@ const RulesModal = ({ children, showRules, setShowRules }) => {
           type="button"
           onClick={() => setShowRules(false)}
         >
-          CLOSE
+          X
         </button>
         <div className="nav-modal-body">{children}</div>
       </div>
@@ -30,7 +30,7 @@ const InfoModal = ({ children, showInfo, setShowInfo }) => {
           type="button"
           onClick={() => setShowInfo(false)}
         >
-          CLOSE
+          X
         </button>
         <div className="nav-modal-body">{children}</div>
       </div>
@@ -87,12 +87,16 @@ function Nav() {
       <button onClick={() => setShowInfo(true)}>What do the Buttons do?</button>
       <InfoModal showInfo={showInfo} setShowInfo={setShowInfo}>
       <div>
-        <h3>What do the Buttons do?</h3>
+        <h3>What do the Game Buttons do?</h3>
         <ul>
-          <li><strong>RANDOM: </strong> Displays a random pattern of cells.</li>
           <li><strong>START/STOP: </strong> Runs the simulation automatically. You should add a couple of cells or select the Random button before doing this. Note: You cannot add more cells once you have started, but you can stop to add more, if you like.</li>
+          <li><strong>SPEED UP: </strong> Speeds up the simulation.</li>
+          <li><strong>SLOW DOWN: </strong> Slows down the simulation.</li>
           <li><strong>ONE GENERATION: </strong> Grows the cell pattern by one generation per click.</li>
           <li><strong>CLEAR: </strong> Resets the generation counter and clears the screen.</li>
+          <li><strong>RANDOM: </strong> Displays a random pattern of cells. Select START/STOP to enjoy.</li>
+          <li><strong>GLIDER: </strong> Displays the glider pattern of cells. Select START/STOP to enjoy.</li>
+          <li><strong>LWSS: </strong> Displays the LWSS pattern of cells. Select START/STOP to enjoy.</li>
         </ul>
       </div>
       </InfoModal>

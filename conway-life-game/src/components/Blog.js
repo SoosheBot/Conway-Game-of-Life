@@ -4,7 +4,7 @@ import BlogStyle from "./styles/BlogStyle";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-//This blog is brought to you by the Letter Q, the number 9, and inspiration from the brilliant code of Nithin Hampi. See more of Nithin's work at https://github.com/nithinthampi
+//This blog's style is brought to you by the Letter Q, the number 9, and inspiration from the work of Nithin Hampi. Find more of Nithin's work at https://github.com/nithinthampi
 
 function Blog() {
   const text1 =
@@ -17,7 +17,7 @@ function Blog() {
     "After setting up a game rules function (where I set up the rules of how the cells can move, and *where* they can move), I incorporated my double buffer a couple of places. 1. Into the return statement (where I mapped through the grid to display the active/alive cells when the simulation started running) and 2. Into the RANDOM button's onClick.";
   const text5 =
     "Speaking of simulations, everything I did above worked for creating an automaton (YAY!). But it only moved one generation (BOO!). While that essentially solved the challenge, I wanted it to also have the option to render automatically. In order to do that, I created a useEffect hook with a setInterval to flipflop back and forth between the two. Since it. Finally, in order to control the speed of the animation, I set up a useRef inside the useEffect, and tied different buttons to different speeds in the function's return.";
-    const text6 = "Something I've been tinkering with is to have the cells change color. I'm not sure if I want them to change color when they move to a neighboring cell, or just randomly change color from one to another. While this would probably be another fantastic reason to learn Canvas (I'll probably refactor the code to this, in fact), I'm going to give good ol' CSS a try and see if I can get it to, for now, just animate a color change.";
+    const text6 = "Something I've been tinkering with is to have the cells change color. I'm not sure if I want them to change color when they move to a neighboring cell, or just randomly change color from one to another. While this would probably be another fantastic reason to learn Canvas (I'll get there I swear. Just...not today.), I decided to just do a simple animation in CSS to change the colors back and forth, and just move on with my life. I added a couple of additional tweaks to make everything look a bit nicer than the basic design I had originally.";
   const text7 =
     "Conway's Game of Life is is the best-known example of cellular automation. It is a zero-player game, meaning, once a player enters an initial input, the game runs itself by evolving. Cellular automata are a class of mathematical objects that has a space of cells, and a set of allowed states for each of cell. It is Turing complete, which means it can manipulate and decide on data-manipulation rule sets. We know this because the automata are able to see what is happening in the cells around them and make decisions as to where to move next. Turing completeness pretty much means the thing (automata, programming language, etc.) is able to actively change the state of the system.";
   const [collapse, setCollapse] = useState(true);

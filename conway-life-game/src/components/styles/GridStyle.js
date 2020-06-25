@@ -1,34 +1,34 @@
 import styled from "styled-components";
 
+
 const GridStyle = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
 
   .grid-wrapper {
+    margin-left:5%;
+    margin-right:10%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color:#fff; 
-  }
-  
-  .avoid-clicks {
-    pointer-events: none;
+    background-color:slategrey;   
+    box-shadow: 0 10px 25px;
   }
 
     .grid-boxes {
-      background: linear-gradient(270deg, #345f54, #368571, #43ddb6, #5cf7d0);
+      background: grey;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.5), 0 -5px 20px rgba(0,0,0,.3);
+      // background: linear-gradient(270deg, #246655, #a4f1de);
       animation-name: example;
-      // animation-duration: 10s;
       animation: example 1s ease infinite;
-      // animation-iteration-count: infinite;
 
 
       @keyframes example {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}         
+        from {background-color:#246655;}
+        to {background-color:#a4f1de;}        
       }
       
     
@@ -36,11 +36,15 @@ const GridStyle = styled.div`
 
   .gen-count {
     margin: 2%;
+    margin-left:5%;
+    margin-right:10%;
     font-weight: bold;
     text-align: center
   }
 
   .button-box {
+    margin-left:5%;
+    margin-right:10%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -53,6 +57,7 @@ const GridStyle = styled.div`
       border-radius: 5px;
       margin: 1%;
       padding: 1%;
+      box-shadow: 0 10px 25px;
     }
 
   @media only screen and (max-width: 600px) {
@@ -60,6 +65,16 @@ const GridStyle = styled.div`
       flex-wrap: wrap;
     }
   }
+
+  .footer {
+    margin-top:2rem;
+  }
+
 `;
+
+
+
+
+
 
 export default GridStyle;

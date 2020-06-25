@@ -5,7 +5,6 @@ import GridStyle from "./styles/GridStyle";
 const rows = 25;
 const cols = 25;
 
-
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
   [-1, -1],
@@ -54,6 +53,8 @@ const gameRules = (g) => {
   return newGrid;
 };
 
+
+
 const Grid = (props) => {
   //Initial grid state one (to set up double buffering)
   const [frameOne, setFrameOne] = useState(() => {
@@ -89,7 +90,7 @@ const Grid = (props) => {
       setActiveFrame(2);
     } else {
       setFrameOne(gameRules(frameTwo));
-      setActiveFrame(1); 
+      setActiveFrame(1);
     }
   };
 
@@ -111,6 +112,8 @@ const Grid = (props) => {
   }, [activeFrame, running]);
 
   return (
+    <div>
+      
     <GridStyle>
       <div
         className="grid-wrapper"
@@ -122,12 +125,12 @@ const Grid = (props) => {
         {grid.map((row, i) =>
           row.map((col, j) => (
             <div
-              // className={grid[i][j] ? "grid-boxes" : ""}
+              className={grid[i][j] ? "grid-boxes" : ""}
+              // className="grid-boxes"
               key={`${i}-${j}`}
               onClick={() => {
                 if (running) {
-                  console.log("running")
-                  return
+                  return;
                 }
                 const newGrid = Array.from(grid);
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
@@ -135,7 +138,7 @@ const Grid = (props) => {
                   setFrameOne(newGrid);
                 } else {
                   setFrameTwo(newGrid);
-                }          
+                }
               }}
               style={{
                 width: 20,
@@ -248,7 +251,10 @@ const Grid = (props) => {
           Random
         </button>
       </div>
+      <sub className="footer">Check out the GitHub repo here: <a href="#" target="_blank">@SoosheBot</a></sub>
     </GridStyle>
+    
+    </div>
   );
 };
 

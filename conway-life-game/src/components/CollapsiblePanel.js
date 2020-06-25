@@ -6,7 +6,8 @@ import BlogStyle from './styles/BlogStyle';
 function CollapsiblePanel({ children, ...props }) {
   const { expand, collapse } = props;
   const [isCollapse, setIsCollapse] = useState(collapse);
-  const [icon, setIcon] = useState("fa fa-chevron-down");
+  // const [icon, setIcon] = useState("fa fa-chevron-down");
+  const [icon, setIcon] = useState();
   const toggle = () => {
     setIsCollapse(!isCollapse);
     setIcon(state => {

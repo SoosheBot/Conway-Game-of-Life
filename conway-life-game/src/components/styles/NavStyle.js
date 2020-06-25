@@ -46,7 +46,6 @@ const NavStyle = styled.div`
   background: none;
   color: red;
   font-weight: bold;
-  // cursor: pointer;
 }
 
 .nav-modal-body {
@@ -59,7 +58,7 @@ button {
   border-radius: 5px;
   margin: 10px;
   padding: 15px;
-
+  box-shadow: 0 10px 25px;
 }
 
 @media only screen and (max-width: 600px) {   

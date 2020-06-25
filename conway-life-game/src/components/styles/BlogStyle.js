@@ -11,19 +11,30 @@ const BlogStyle = styled.div`
 .blog-button-box {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-
 }
 
 .blog-button {
     margin-top: 0.5%;
     border-radius: 5px;
     font-size: 16px;
+    box-shadow: 0 10px 25px
 }
 
 .coll-panel {
     width: 85%;
-    margin-left: 5%
+    margin-left: 5%;   
 }
+
+
+.btn-primary {
+    background-color:#246655;
+    border-color:#a4f1de;
+    box-shadow: 0 10px 25px
+    
+}
+    
+
+
 `;
 
 
