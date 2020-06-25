@@ -5,6 +5,9 @@ import GridStyle from "./styles/GridStyle";
 const rows = 25;
 const cols = 25;
 
+//cell colors
+const color = [Math.floor(Math.random() * 9)];
+
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
   [-1, -1],
@@ -80,15 +83,24 @@ const Grid = (props) => {
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
+  //   //sets up the initial grid layout
+  //   const [layout, setLayout] = useState({
+  //     width: 20,
+  //     height: 20,
+  //     border: "solid 1px black",
+  //     backgroundColor: ""
+  // })
+
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
+    setGenCount(genCount + 1);
     if (activeGrid === 1) {
       setFrameTwo(gameRules(frameOne));
       setActiveGrid(2);
     } else {
       setFrameOne(gameRules(frameTwo));
       setActiveGrid(1);
-      setGenCount(genCount + 1);
+      
     }
   };
 
@@ -121,7 +133,7 @@ const Grid = (props) => {
         {grid.map((row, i) =>
           row.map((col, j) => (
             <div
-              className="grid-boxes"
+              // className={grid[i][j] ? "grid-boxes" : ""}
               key={`${i}-${j}`}
               onClick={() => {
                 const newGrid = Array.from(grid);
@@ -130,7 +142,7 @@ const Grid = (props) => {
                   setFrameOne(newGrid);
                 } else {
                   setFrameTwo(newGrid);
-                }
+                }          
               }}
               style={{
                 width: 20,
@@ -185,8 +197,8 @@ const Grid = (props) => {
         >
           Clear
         </button>
-        </div>
-        <div className="pattern-button-box">
+      </div>
+      <div className="pattern-button-box">
         <button
           onClick={() => {
             const newGrid = Array.from(grid);
@@ -242,10 +254,7 @@ const Grid = (props) => {
         >
           Random
         </button>
-        
-        </div>
-        
-      
+      </div>
     </GridStyle>
   );
 };

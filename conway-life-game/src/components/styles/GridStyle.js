@@ -5,20 +5,31 @@ const GridStyle = styled.div`
   flex-direction: column;
   text-align: center;
 
-
-
   .grid-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color:#fff; 
+      
 
   }
 
-    // .grid-boxes {
-    //   color: #fff;
-    //   animation: background-color 1s ease-in-out infinite;
-    // }
+    .grid-boxes {
+      background: linear-gradient(270deg, #345f54, #368571, #43ddb6, #5cf7d0);
+      animation-name: example;
+      // animation-duration: 10s;
+      animation: example 1s ease infinite;
+      // animation-iteration-count: infinite;
+
+
+      @keyframes example {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}         
+      }
+      
+    
   }
 
   .gen-count {
