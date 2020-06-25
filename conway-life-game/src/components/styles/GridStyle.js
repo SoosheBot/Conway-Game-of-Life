@@ -11,8 +11,10 @@ const GridStyle = styled.div`
     align-items: center;
     justify-content: center;
     background-color:#fff; 
-      
-
+  }
+  
+  .avoid-clicks {
+    pointer-events: none;
   }
 
     .grid-boxes {

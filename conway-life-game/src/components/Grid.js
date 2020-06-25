@@ -5,8 +5,6 @@ import GridStyle from "./styles/GridStyle";
 const rows = 25;
 const cols = 25;
 
-//cell colors
-const color = [Math.floor(Math.random() * 9)];
 
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
@@ -71,7 +69,7 @@ const Grid = (props) => {
   const [running, setRunning] = useState(false);
 
   // The state that determines which grid is active
-  const [activeGrid, setActiveGrid] = useState(1);
+  const [activeFrame, setActiveFrame] = useState(1);
 
   // The generation counter for the cells
   const [genCount, setGenCount] = useState(0);
@@ -83,34 +81,25 @@ const Grid = (props) => {
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
-  //   //sets up the initial grid layout
-  //   const [layout, setLayout] = useState({
-  //     width: 20,
-  //     height: 20,
-  //     border: "solid 1px black",
-  //     backgroundColor: ""
-  // })
-
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
     setGenCount(genCount + 1);
-    if (activeGrid === 1) {
+    if (activeFrame === 1) {
       setFrameTwo(gameRules(frameOne));
-      setActiveGrid(2);
+      setActiveFrame(2);
     } else {
       setFrameOne(gameRules(frameTwo));
-      setActiveGrid(1);
-      
+      setActiveFrame(1); 
     }
   };
 
-  // Ternary operator to set a const of grid to the activeGrid state. If the grid is active it will be active on frameOne or frameTwo
-  const grid = activeGrid === 1 ? frameOne : frameTwo;
+  // Ternary operator to set a const of grid to the activeFrame state. If the grid is active it will be active on frameOne or frameTwo
+  const grid = activeFrame === 1 ? frameOne : frameTwo;
 
   // The simulation --
   useEffect(() => {
     let runSim = null;
-    if (activeGrid && running) {
+    if (activeFrame && running) {
       runSim = setInterval(() => {
         nextGen();
       }, speedRef.current);
@@ -119,7 +108,7 @@ const Grid = (props) => {
       return;
     }
     return () => clearInterval(runSim);
-  }, [activeGrid, running]);
+  }, [activeFrame, running]);
 
   return (
     <GridStyle>
@@ -136,9 +125,13 @@ const Grid = (props) => {
               // className={grid[i][j] ? "grid-boxes" : ""}
               key={`${i}-${j}`}
               onClick={() => {
+                if (running) {
+                  console.log("running")
+                  return
+                }
                 const newGrid = Array.from(grid);
                 newGrid[i][j] = grid[i][j] ? 0 : 1;
-                if (activeGrid === 1) {
+                if (activeFrame === 1) {
                   setFrameOne(newGrid);
                 } else {
                   setFrameTwo(newGrid);
@@ -207,7 +200,7 @@ const Grid = (props) => {
             newGrid[3][3] = 1;
             newGrid[3][2] = 1;
             newGrid[2][1] = 1;
-            if (activeGrid === 1) {
+            if (activeFrame === 1) {
               setFrameOne(newGrid);
             } else {
               setFrameTwo(newGrid);
@@ -228,7 +221,7 @@ const Grid = (props) => {
             newGrid[10][20] = 1;
             newGrid[9][20] = 1;
             newGrid[8][21] = 1;
-            if (activeGrid === 1) {
+            if (activeFrame === 1) {
               setFrameOne(newGrid);
             } else {
               setFrameTwo(newGrid);
@@ -245,7 +238,7 @@ const Grid = (props) => {
                 Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
               );
             }
-            if (activeGrid === 1) {
+            if (activeFrame === 1) {
               setFrameOne(clearedGrid);
             } else {
               setFrameTwo(clearedGrid);
