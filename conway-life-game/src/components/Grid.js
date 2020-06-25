@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from "./styles/GridStyle";
 
-//boundaries of the grid
-const rows = 25;
-const cols = 25;
-
 // Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
 const neighborhood = [
   [-1, -1],
@@ -17,45 +13,49 @@ const neighborhood = [
   [1, 1],
 ];
 
-// Set up an empty grid that can be used across multiple states
-const emptyGrid = () => {
-  const clearedGrid = [];
-  for (let i = 0; i < rows; i++) {
-    clearedGrid.push(Array.from(Array(cols), () => 0));
-  }
-  return clearedGrid;
-};
+const Grid = (props) => {
+  //boundaries of the grid
+  const [size, setSize] = useState({
+    rows: 25,
+    cols: 25,
+  });
 
-// Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above).
-const gameRules = (g) => {
-  let newGrid = emptyGrid();
-  // Then we have nested for loops to iterate over the neighborhood cells by the rows and cols we set up initially.
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      let neighbors = 0;
-      neighborhood.forEach(([x, y]) => {
-        const blocX = i + x;
-        const blocY = j + y;
-        if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
-          neighbors += g[blocX][blocY];
+  // Set up an empty grid that can be used across multiple states
+  const emptyGrid = () => {
+    const clearedGrid = [];
+    for (let i = 0; i < size.rows; i++) {
+      clearedGrid.push(Array.from(Array(size.cols), () => 0));
+    }
+    return clearedGrid;
+  };
+
+  // Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above).
+  const gameRules = (g) => {
+    let newGrid = emptyGrid();
+    // Then we have nested for loops to iterate over the neighborhood cells by the size.sizerows and size.cols we set up initially.
+    for (let i = 0; i < size.rows; i++) {
+      for (let j = 0; j < size.cols; j++) {
+        let neighbors = 0;
+        neighborhood.forEach(([x, y]) => {
+          const blocX = i + x;
+          const blocY = j + y;
+          if (blocX >= 0 && blocX < size.rows && blocY >= 0 && blocY < size.cols) {
+            neighbors += g[blocX][blocY];
+          }
+        });
+        // Once we have set up how the cells work on the board, we then implement the actual rules of how the cells travel across the board.
+        if (neighbors < 2 || neighbors > 3) {
+          newGrid[i][j] = 0;
+        } else if (g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
+          newGrid[i][j] = 1;
+        } else if (g[i][j] === 0 && neighbors === 3) {
+          newGrid[i][j] = 1;
         }
-      });
-      // Once we have set up how the cells work on the board, we then implement the actual rules of how the cells travel across the board.
-      if (neighbors < 2 || neighbors > 3) {
-        newGrid[i][j] = 0;
-      } else if (g[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
-        newGrid[i][j] = 1;
-      } else if (g[i][j] === 0 && neighbors === 3) {
-        newGrid[i][j] = 1;
       }
     }
-  }
-  return newGrid;
-};
+    return newGrid;
+  };
 
-
-
-const Grid = (props) => {
   //Initial grid state one (to set up double buffering)
   const [frameOne, setFrameOne] = useState(() => {
     return emptyGrid();
@@ -102,6 +102,7 @@ const Grid = (props) => {
     let runSim = null;
     if (activeFrame && running) {
       runSim = setInterval(() => {
+        setSize(size);
         nextGen();
       }, speedRef.current);
     } else if (!running) {
@@ -113,146 +114,168 @@ const Grid = (props) => {
 
   return (
     <div>
-      
-    <GridStyle>
-      <div
-        className="grid-wrapper"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${cols}, 20px)`,
-        }}
-      >
-        {grid.map((row, i) =>
-          row.map((col, j) => (
-            <div
-              className={grid[i][j] ? "grid-boxes" : ""}
-              key={`${i}-${j}`}
-              onClick={() => {
-                if (running) {
-                  return;
-                }
-                const newGrid = Array.from(grid);
-                newGrid[i][j] = grid[i][j] ? 0 : 1;
-                if (activeFrame === 1) {
-                  setFrameOne(newGrid);
-                } else {
-                  setFrameTwo(newGrid);
-                }
-              }}
-              style={{
-                width: 20,
-                height: 20,
-                backgroundColor: grid[i][j] ? "purple" : undefined,
-                border: "dashed 1px black",
-              }}
-            />
-          ))
-        )}
-      </div>
-      <h3 className="gen-count">Generation Count: {genCount}</h3>
-      <div className="button-box">
-        <button
-          onClick={() => {
-            setRunning(!running);
+      <GridStyle>
+        <div
+          className="grid-wrapper"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${size.cols}, 20px)`,
           }}
         >
-          {running ? "Stop" : "Start"}
-        </button>
+          {grid.map((row, i) =>
+            row.map((col, j) => (
+              <div
+                className={grid[i][j] ? "grid-boxes" : ""}
+                key={`${i}-${j}`}
+                onClick={() => {
+                  if (running) {
+                    return;
+                  }
+                  const newGrid = Array.from(grid);
+                  newGrid[i][j] = grid[i][j] ? 0 : 1;
+                  if (activeFrame === 1) {
+                    setFrameOne(newGrid);
+                  } else {
+                    setFrameTwo(newGrid);
+                  }
+                }}
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: grid[i][j] ? undefined : undefined,
+                  border: "dashed 1px black",
+                }}
+              />
+            ))
+          )}
+        </div>
+        <h3 className="gen-count">Generation Count: {genCount}</h3>
+        <div className="button-box">
+          <button
+            onClick={() => {
+              setRunning(!running);
+              if (!running) {
+                console.log("Not running")
+                //code here to turn off css animation
+                
+              }
+            }}
+          >
+            {running ? "Stop" : "Start"}
+          </button>
 
-        <button
-          onClick={() => {
-            setSpeed(100);
-          }}
-        >
-          Speed Up
-        </button>
+          <button
+            onClick={() => {
+              setSpeed(100);
+            }}
+          >
+            Speed Up
+          </button>
 
-        <button
-          onClick={() => {
-            setSpeed(1000);
-          }}
-        >
-          Slow Down
-        </button>
+          <button
+            onClick={() => {
+              setSpeed(1000);
+            }}
+          >
+            Slow Down
+          </button>
 
-        <button
-          onClick={() => {
-            nextGen();
-          }}
-        >
-          One Generation
-        </button>
+          <button
+            onClick={() => {
+              nextGen();
+            }}
+          >
+            One Generation
+          </button>
 
-        <button
-          onClick={() => {
-            setFrameOne(emptyGrid());
-            setFrameTwo(emptyGrid());
-            setGenCount(0);
-          }}
-        >
-          Clear
-        </button>
-      </div>
-      <div className="pattern-button-box">
-        <button
-          onClick={() => {
-            const newGrid = Array.from(grid);
-            newGrid[1][3] = 1;
-            newGrid[2][3] = 1;
-            newGrid[3][3] = 1;
-            newGrid[3][2] = 1;
-            newGrid[2][1] = 1;
-            if (activeFrame === 1) {
-              setFrameOne(newGrid);
-            } else {
-              setFrameTwo(newGrid);
-            }
-          }}
-        >
-          Glider
-        </button>
-        <button
-          onClick={() => {
-            const newGrid = Array.from(grid);
-            newGrid[8][24] = 1;
-            newGrid[10][24] = 1;
-            newGrid[11][23] = 1;
-            newGrid[11][22] = 1;
-            newGrid[11][21] = 1;
-            newGrid[11][20] = 1;
-            newGrid[10][20] = 1;
-            newGrid[9][20] = 1;
-            newGrid[8][21] = 1;
-            if (activeFrame === 1) {
-              setFrameOne(newGrid);
-            } else {
-              setFrameTwo(newGrid);
-            }
-          }}
-        >
-          Lightweight Spaceship (LWSS)
-        </button>
-        <button
-          onClick={() => {
-            const clearedGrid = [];
-            for (let i = 0; i < rows; i++) {
-              clearedGrid.push(
-                Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
-              );
-            }
-            if (activeFrame === 1) {
-              setFrameOne(clearedGrid);
-            } else {
-              setFrameTwo(clearedGrid);
-            }
-          }}
-        >
-          Random
-        </button>
-      </div>
-      <sub className="footer">Check out the GitHub repo here: <a href="#" target="_blank">@SoosheBot</a></sub>
-    </GridStyle>
-    
+          <button
+            onClick={() => {
+              if (running) {
+                setRunning(!running);
+              }
+              setFrameOne(emptyGrid());
+              setFrameTwo(emptyGrid());
+              setGenCount(0);
+            }}
+          >
+            Clear
+          </button>
+        </div>
+        <div className="pattern-button-box">
+          <button
+            onClick={() => {
+              const newGrid = Array.from(grid);
+              newGrid[1][3] = 1;
+              newGrid[2][3] = 1;
+              newGrid[3][3] = 1;
+              newGrid[3][2] = 1;
+              newGrid[2][1] = 1;
+              if (activeFrame === 1) {
+                setFrameOne(newGrid);
+              } else {
+                setFrameTwo(newGrid);
+              }
+            }}
+          >
+            Glider
+          </button>
+          <button
+            onClick={() => {
+              const newGrid = Array.from(grid);
+              newGrid[8][24] = 1;
+              newGrid[10][24] = 1;
+              newGrid[11][23] = 1;
+              newGrid[11][22] = 1;
+              newGrid[11][21] = 1;
+              newGrid[11][20] = 1;
+              newGrid[10][20] = 1;
+              newGrid[9][20] = 1;
+              newGrid[8][21] = 1;
+              if (activeFrame === 1) {
+                setFrameOne(newGrid);
+              } else {
+                setFrameTwo(newGrid);
+              }
+            }}
+          >
+            Lightweight Spaceship (LWSS)
+          </button>
+          <button
+            onClick={() => {
+              const clearedGrid = [];
+              for (let i = 0; i < size.rows; i++) {
+                clearedGrid.push(
+                  Array.from(Array(size.cols), () => (Math.random() > 0.7 ? 1 : 0))
+                );
+              }
+              if (activeFrame === 1) {
+                setFrameOne(clearedGrid);
+              } else {
+                setFrameTwo(clearedGrid);
+              }
+            }}
+          >
+            Random
+          </button>
+          <button
+            onClick={() => {
+              console.log("big time");
+              setSize({
+                cols: 25,
+                rows: 45,
+              });
+            }}
+          >
+            25x45 grid
+          </button>
+        </div>
+        <sub className="footer">
+          Check out the GitHub repo here:{" "}
+          <a href="#" target="_blank">
+            @SoosheBot
+          </a>
+        </sub>
+      </GridStyle>
     </div>
   );
 };
