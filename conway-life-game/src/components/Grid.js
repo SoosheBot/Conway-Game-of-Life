@@ -13,18 +13,16 @@ const neighborhood = [
   [1, 1],
 ];
 
-const Grid = (props) => {
   //boundaries of the grid
-  const [size, setSize] = useState({
-    rows: 25,
-    cols: 25,
-  });
+  let rows = 25;
+  let cols = 25
+ 
 
   // Set up an empty grid that can be used across multiple states
   const emptyGrid = () => {
     const clearedGrid = [];
-    for (let i = 0; i < size.rows; i++) {
-      clearedGrid.push(Array.from(Array(size.cols), () => 0));
+    for (let i = 0; i < rows; i++) {
+      clearedGrid.push(Array.from(Array(cols), () => 0));
     }
     return clearedGrid;
   };
@@ -32,14 +30,14 @@ const Grid = (props) => {
   // Set up the game's rules. First, we set the new grid equal to an empty grid (using the emptyGrid function we created above).
   const gameRules = (g) => {
     let newGrid = emptyGrid();
-    // Then we have nested for loops to iterate over the neighborhood cells by the size.sizerows and size.cols we set up initially.
-    for (let i = 0; i < size.rows; i++) {
-      for (let j = 0; j < size.cols; j++) {
+    // Then we have nested for loops to iterate over the neighborhood cells by the size.sizerows and cols we set up initially.
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
         let neighbors = 0;
         neighborhood.forEach(([x, y]) => {
           const blocX = i + x;
           const blocY = j + y;
-          if (blocX >= 0 && blocX < size.rows && blocY >= 0 && blocY < size.cols) {
+          if (blocX >= 0 && blocX < rows && blocY >= 0 && blocY < cols) {
             neighbors += g[blocX][blocY];
           }
         });
@@ -56,10 +54,13 @@ const Grid = (props) => {
     return newGrid;
   };
 
+const Grid = () => {
   //Initial grid state one (to set up double buffering)
   const [frameOne, setFrameOne] = useState(() => {
     return emptyGrid();
   });
+  const frameOneRef = useRef(frameOne);
+  frameOneRef.current = frameOne
 
   // Initial grid state two (to set up double buffering)
   const [frameTwo, setFrameTwo] = useState(() => {
@@ -82,6 +83,11 @@ const Grid = (props) => {
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
+  const [animate, setAnimate] = useState(false);
+  const animateRef = useState(animate);
+  animateRef.current = animate;
+
+
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
     setGenCount(genCount + 1);
@@ -102,9 +108,8 @@ const Grid = (props) => {
     let runSim = null;
     if (activeFrame && running) {
       runSim = setInterval(() => {
-        setSize(size);
         nextGen();
-      }, speedRef.current);
+      }, speedRef.current, frameOneRef.current);
     } else if (!running) {
       clearInterval(runSim);
       return;
@@ -119,7 +124,7 @@ const Grid = (props) => {
           className="grid-wrapper"
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(${size.cols}, 20px)`,
+            gridTemplateColumns: `repeat(${cols}, 20px)`,
           }}
         >
           {grid.map((row, i) =>
@@ -142,7 +147,7 @@ const Grid = (props) => {
                 style={{
                   width: 20,
                   height: 20,
-                  backgroundColor: grid[i][j] ? undefined : undefined,
+                  backgroundColor: grid[i][j] ? "purple" : undefined,
                   border: "dashed 1px black",
                 }}
               />
@@ -154,11 +159,11 @@ const Grid = (props) => {
           <button
             onClick={() => {
               setRunning(!running);
-              if (!running) {
-                console.log("Not running")
-                //code here to turn off css animation
+              // if (!running) {
+              //   console.log("Turn off css here")
+              //   //code here to turn off css animation
                 
-              }
+              // }
             }}
           >
             {running ? "Stop" : "Start"}
@@ -166,7 +171,7 @@ const Grid = (props) => {
 
           <button
             onClick={() => {
-              setSpeed(100);
+              setSpeed(50);
             }}
           >
             Speed Up
@@ -243,9 +248,9 @@ const Grid = (props) => {
           <button
             onClick={() => {
               const clearedGrid = [];
-              for (let i = 0; i < size.rows; i++) {
+              for (let i = 0; i < rows; i++) {
                 clearedGrid.push(
-                  Array.from(Array(size.cols), () => (Math.random() > 0.7 ? 1 : 0))
+                  Array.from(Array(cols), () => (Math.random() > 0.7 ? 1 : 0))
                 );
               }
               if (activeFrame === 1) {
@@ -257,17 +262,30 @@ const Grid = (props) => {
           >
             Random
           </button>
-          <button
+          <div className="grid-sizes-button box">
+          {/* <button
             onClick={() => {
               console.log("big time");
-              setSize({
-                cols: 25,
-                rows: 45,
-              });
+              //make the grid bigger
+              let rows = 10
+              let cols = 45
+              const clearedGrid = [];
+    for (let i = 0; i < rows; i++) {
+      clearedGrid.push(Array.from(Array(cols), () => 0));
+    }
+    return clearedGrid;
             }}
           >
-            25x45 grid
-          </button>
+            Enlarge the Grid - 25x45
+          </button> */}
+          {/* <button
+            onClick={() => {
+              setSize({});
+            }}
+          >
+            Enlarge - 25x45
+          </button> */}
+          </div>
         </div>
         <sub className="footer">
           Check out the GitHub repo here:{" "}
