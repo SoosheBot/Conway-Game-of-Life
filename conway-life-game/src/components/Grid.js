@@ -273,8 +273,3 @@ const Grid = () => {
 };
 
 export default Grid;
-
-// To dos:
-// 1. Create hook/function to start and stop the animation for grid boxes
-// 2. Refactor the boundaries of the grid so they are set to variables instead of hard coded numbers
-// 3. Refactor inline styling
