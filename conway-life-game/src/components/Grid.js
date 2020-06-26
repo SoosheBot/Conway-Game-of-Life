@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import GridStyle from "./styles/GridStyle";
 
-// Eight neighbors, which are the cells that are horizontally, vertically, or diagonally adjacent. They all live in the neighborhood.
+// Eight directions on a x,y grid that the automata can travel in
 const neighborhood = [
   [-1, -1],
   [-1, 0],
@@ -13,7 +13,7 @@ const neighborhood = [
   [1, 1],
 ];
 
-  //boundaries of the grid
+  //boundaries of the grid -- can refactor this, possibly to useState so we can create the option to change grid boundaries down the line
   let rows = 25;
   let cols = 25
  
@@ -273,3 +273,8 @@ const Grid = () => {
 };
 
 export default Grid;
+
+// To dos:
+// 1. Create hook/function to start and stop the animation for grid boxes
+// 2. Refactor the boundaries of the grid so they are set to variables instead of hard coded numbers
+// 3. Refactor inline styling
