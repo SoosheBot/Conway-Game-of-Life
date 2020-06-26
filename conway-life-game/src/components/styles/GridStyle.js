@@ -57,7 +57,7 @@ const GridStyle = styled.div`
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 -5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     animation-name: example;
-    animation: example 1s ease infinite;
+    animation: example 1s ease-in-out infinite;
 
     @keyframes example {
       from {

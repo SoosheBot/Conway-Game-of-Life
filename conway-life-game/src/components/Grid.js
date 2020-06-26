@@ -83,10 +83,6 @@ const Grid = () => {
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
-  const [animate, setAnimate] = useState(false);
-  const animateRef = useState(animate);
-  animateRef.current = animate;
-
 
   // Double buffer -- when the active grid is 1, we set frameOne's state into the gameRules function, and set that into frameTwo. Else, if frameTwo is active, we set it into the gameRules, and put that setup inside setframeOne's state so it is ready to be handed off. We also put the generation counter here.
   const nextGen = () => {
@@ -116,6 +112,7 @@ const Grid = () => {
     }
     return () => clearInterval(runSim);
   }, [activeFrame, running]);
+
 
   return (
     <div>
@@ -160,10 +157,9 @@ const Grid = () => {
             onClick={() => {
               setRunning(!running);
               // if (!running) {
-              //   console.log("Turn off css here")
-              //   //code here to turn off css animation
-                
-              // }
+              //   window.cancelAnimationFrame(activeFrame)
+              // } 
+              
             }}
           >
             {running ? "Stop" : "Start"}
@@ -263,28 +259,6 @@ const Grid = () => {
             Random
           </button>
           <div className="grid-sizes-button box">
-          {/* <button
-            onClick={() => {
-              console.log("big time");
-              //make the grid bigger
-              let rows = 10
-              let cols = 45
-              const clearedGrid = [];
-    for (let i = 0; i < rows; i++) {
-      clearedGrid.push(Array.from(Array(cols), () => 0));
-    }
-    return clearedGrid;
-            }}
-          >
-            Enlarge the Grid - 25x45
-          </button> */}
-          {/* <button
-            onClick={() => {
-              setSize({});
-            }}
-          >
-            Enlarge - 25x45
-          </button> */}
           </div>
         </div>
         <sub className="footer">
