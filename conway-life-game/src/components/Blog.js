@@ -17,7 +17,7 @@ function Blog() {
     "After setting up a game rules function (where I set up the rules of how the cells can move, and *where* they can move), I incorporated my double buffer a couple of places. 1. Into the return statement (where I mapped through the grid to display the active/alive cells when the simulation started running) and 2. Into the RANDOM button's onClick.";
   const text5 =
     "Speaking of simulations, everything I did above worked for creating an automaton (YAY!). But it only moved one generation (BOO!). While that essentially solved the challenge, I wanted it to also have the option to render automatically. In order to do that, I created a useEffect hook with a setInterval to flipflop back and forth between the two. Since it. Finally, in order to control the speed of the animation, I set up a useRef inside the useEffect, and tied different buttons to different speeds in the function's return.";
-    const text6 = "Something I've been tinkering with is to have the cells change color. I'm not sure if I want them to change color when they move to a neighboring cell, or just randomly change color from one to another. While this would probably be another fantastic reason to learn Canvas (I'll get there I swear. Just...not today.), I decided to just do a simple animation in CSS to change the colors back and forth, and just move on with my life. I added a couple of additional tweaks to make everything look a bit nicer than the basic design I had originally.";
+    const text6 = "Something I've been tinkering with is to have the cells change color. Right now, they change color trippily via a CSS animation, but what I want (what I really, really want) is for the colors to change with the evolutions, and be static otherwise. This is probably another fantastic reason to learn Canvas (I'll get this in a refactor, I swear.), the CSS animation is pretty, and not *too* seizure-inducing, I hope. To be on the safe side, I'm going to slow it down a bit.";
   const text7 =
     "Conway's Game of Life is is the best-known example of cellular automation. It is a zero-player game, meaning, once a player enters an initial input, the game runs itself by evolving. Cellular automata are a class of mathematical objects that has a space of cells, and a set of allowed states for each of cell. It is Turing complete, which means it can manipulate and decide on data-manipulation rule sets. We know this because the automata are able to see what is happening in the cells around them and make decisions as to where to move next. Turing completeness pretty much means the thing (automata, programming language, etc.) is able to actively change the state of the system.";
   const [collapse, setCollapse] = useState(true);
@@ -51,7 +51,7 @@ function Blog() {
           <span>{text2}</span>
         </CollapsiblePanel>
         <CollapsiblePanel
-          expand="What is a double buffer anyway?"
+          expand="What is a double buffer, anyway?"
           collapse={collapse}
         >
           <span>{text3}</span>
@@ -65,7 +65,7 @@ function Blog() {
         >
           <span>{text5}</span>
         </CollapsiblePanel>
-        <CollapsiblePanel expand="To do: Can I paint with all the colors of the wind?" collapse={collapse}>
+        <CollapsiblePanel expand="Can I paint with all the colors of the wind? ...Sorta" collapse={collapse}>
           <span>{text6}</span>
         </CollapsiblePanel>
         <CollapsiblePanel expand="Field notes, ad honorem" collapse={collapse}>
