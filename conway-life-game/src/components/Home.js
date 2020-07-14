@@ -16,8 +16,9 @@ const Home = () => {
             In order to keep building on the concepts I've learned (and remember them), I created a bunch of fun little games.
           </p>
           <p>
-            This page is a compilation of games built with what I've learned in JavaScript and Python, for now.
+            This page started off as the home of my Conway's Game of Life, but I decided to make it a central hub of any game I'm building from here on out. I've got the most experience with JavaScript and Python, so that's what you'll be seeing the most of. I hope you enjoy!
           </p>
+          <p>&mdash; @SoosheBot</p>
         </div>
         <div className="home-body">
           <h2><Link to="/conway">Conway's JavaScript-y Game of Life</Link></h2><br /><br />
@@ -25,6 +26,12 @@ const Home = () => {
           A Fast Fibonacci Python Hash
           </a></h2>
         </div>
+        <sub className="footer">
+          I'm a developer, whee (GitHub):{" "}
+          <a href="https://www.github.com/sooshebot" target="_blank" rel="noopener noreferrer">
+            @SoosheBot
+          </a>
+        </sub>
       </HomeStyle>
     </div>
   );
