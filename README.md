@@ -3,6 +3,14 @@ Welcome to John Conway's "Game of Life"! This is a computer science classic from
 
 *Visit the live project here:* https://conway-game-of-life-eight.vercel.app/
 
+## Quick Installation
+```
+npm init -y
+npx install create-react-app <project-name>
+cd <project-name>
+npm start
+```
+
 
 ## What is it?
 This isn't a typical interactive computer game. Conway's "Game of Life" is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input from a player. One interacts with the Game of Life by creating an initial configuration (pattern) and observing how it evolves, or, for advanced “players”, by creating patterns with particular properties
