@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavStyle from './styles/NavStyle';
+import { Link } from "react-router-dom";
 
 const RulesModal = ({ children, showRules, setShowRules }) => {
 
@@ -41,7 +42,7 @@ const InfoModal = ({ children, showInfo, setShowInfo }) => {
 };
 
 
-function Nav() {
+function ConwayNav() {
   const [showRules, setShowRules] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -100,10 +101,14 @@ function Nav() {
         </ul>
       </div>
       </InfoModal>
+      <Link to="/"><button type="button">
+        Home
+      </button>
+      </Link>
     </div>
     </NavStyle>
   );
 }
 
 
-export default Nav;
+export default ConwayNav;

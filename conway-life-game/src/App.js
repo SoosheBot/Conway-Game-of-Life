@@ -1,17 +1,19 @@
 import React from "react";
-import Nav from "./components/Nav";
+import {
+  BrowserRouter as Router,
+  Route, Link,
+} from "react-router-dom";
+// import ConwayNav from "./components/ConwayNav";
 import Grid from "./components/Grid";
-import Blog from "./components/Blog";
+// import Blog from "./components/Blog";
+import Home from "./components/Home";
 
 const App = () => {
-  return (
-    <div className="wrapper">
-      <div className="header">
-        <Nav />
-      </div>
-      <Blog />
-      <Grid />
-    </div>
+  return ( 
+    <Router>
+        <Route exact path="/" component={Home}/>
+        <Route path="/conway" component={Grid} />
+    </Router>
   );
 };
 
