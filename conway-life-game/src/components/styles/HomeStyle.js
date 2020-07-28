@@ -10,11 +10,11 @@ const HomeStyle = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  margin-top: 10rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   margin-left: 25%;
   margin-right: 25%;
   background-color: #246655;
-  box-shadow: 0 10px 25px;
   border-radius: 5px;
 
   h1 {
@@ -39,6 +39,13 @@ const HomeStyle = styled.div`
   }
   a:hover {
     color: #00b4a3;
+  }
+
+  .home-footer {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    background-color: #246655;
+    margin-left: 50%;
   }
 `;
 
