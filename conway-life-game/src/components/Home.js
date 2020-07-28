@@ -36,13 +36,13 @@ const Home = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              A Pythonic Fast or Slow Fibonacci Hash
+              A Pythonic Fast or Slow Fibonacci Hash (link to repo)
             </a>
           </h2>
         </div>
         <sub className="home-footer">
           <i>
-            On GitHub (like a srs Developer):{" "}
+            On GitHub:{" "}
             <a
               href="https://www.github.com/sooshebot"
               target="_blank"
