@@ -39,7 +39,6 @@ const GridStyle = styled.div`
   button {
     border-radius: 5px;
     margin: 1%;
-    padding: 1%;
     box-shadow: 0 10px 25px;
   }
 
