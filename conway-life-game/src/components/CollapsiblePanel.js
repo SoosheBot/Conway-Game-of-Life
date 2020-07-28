@@ -37,7 +37,7 @@ function CollapsiblePanel({ children, ...props }) {
         type="button"
         className="coll-panel-btn btn-primary btn-block text-left"
         onClick={() => toggle()}
-      >
+      title="Click to collapse or expand this section">
         <i className={icon} /> {expand}
       </button>
       <Collapse className="border text-left p-2" isOpen={isCollapse}>

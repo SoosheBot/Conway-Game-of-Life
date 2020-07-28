@@ -164,11 +164,8 @@ const Grid = () => {
           <button
             onClick={() => {
               setRunning(!running);
-              // if (!running) {
-              //   window.cancelAnimationFrame(activeFrame)
-              // }
             }}
-          >
+          title="Stop or Start">
             {running ? "Stop" : "Start"}
           </button>
 
@@ -176,7 +173,7 @@ const Grid = () => {
             onClick={() => {
               setSpeed(50);
             }}
-          >
+          title="Speed up">
             Speed Up
           </button>
 
@@ -184,7 +181,7 @@ const Grid = () => {
             onClick={() => {
               setSpeed(1000);
             }}
-          >
+          title="Slow Down">
             Slow Down
           </button>
 
@@ -192,7 +189,7 @@ const Grid = () => {
             onClick={() => {
               nextGen();
             }}
-          >
+          title="Advance by one generation">
             One Generation
           </button>
 
@@ -205,7 +202,7 @@ const Grid = () => {
               setFrameTwo(emptyGrid());
               setGenCount(0);
             }}
-          >
+          title="Clear game board">
             Clear
           </button>
         </div>
@@ -224,7 +221,7 @@ const Grid = () => {
                 setFrameTwo(newGrid);
               }
             }}
-          >
+          title="Select Glider pattern">
             Glider
           </button>
           <button
@@ -245,7 +242,7 @@ const Grid = () => {
                 setFrameTwo(newGrid);
               }
             }}
-          >
+          title="Select Lightweight Spaceship pattern">
             Lightweight Spaceship (LWSS)
           </button>
           <button
@@ -262,14 +259,14 @@ const Grid = () => {
                 setFrameTwo(clearedGrid);
               }
             }}
-          >
+          title="Select random pattern">
             Random
           </button>
           <div className="grid-sizes-button box"></div>
         </div>
         <sub className="footer">
           Check out the GitHub repo here:{" "}
-          <a href="https://www.github.com/sooshebot" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.github.com/sooshebot" target="_blank" rel="noopener noreferrer" title="Link to SoosheBot Github repo">
             @SoosheBot
           </a>
         </sub>

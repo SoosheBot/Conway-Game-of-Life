@@ -40,7 +40,7 @@ function Blog() {
       <div className="blog-button-box">
         <h3 className="blog-title">
           Building the Game of Life &nbsp;&nbsp;{" "}
-          <button type="button" className="blog-button" onClick={collapseAll}>
+          <button type="button" className="blog-button" onClick={collapseAll} title="Read All -- Click to collapse or expand the whole blog.">
             <i className={icon} /> {expand}
           </button>
         </h3>

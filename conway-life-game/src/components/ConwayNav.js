@@ -11,7 +11,7 @@ const RulesModal = ({ children, showRules, setShowRules }) => {
           className="close-nav-modal"
           type="button"
           onClick={() => setShowRules(false)}
-        >
+        title="Click X to close">
           X
         </button>
         <div className="nav-modal-body">{children}</div>
@@ -30,7 +30,7 @@ const InfoModal = ({ children, showInfo, setShowInfo }) => {
           className="close-nav-modal"
           type="button"
           onClick={() => setShowInfo(false)}
-        >
+        title="Click X to close">
           X
         </button>
         <div className="nav-modal-body">{children}</div>
@@ -50,7 +50,7 @@ function ConwayNav() {
     <NavStyle>
     <div className="nav-wrapper">
       <h1>John Conway's Game of Life</h1>
-      <button type="button" onClick={() => setShowRules(true)}>
+      <button type="button" onClick={() => setShowRules(true)} title="Game Rules">
         Game Rules
       </button>
       <RulesModal showRules={showRules} setShowRules={setShowRules}>
@@ -85,7 +85,7 @@ function ConwayNav() {
           </ul>
         </div>  
       </RulesModal>
-      <button onClick={() => setShowInfo(true)}>What do the Buttons do?</button>
+      <button onClick={() => setShowInfo(true)} title="What do the buttons do?">What do the Buttons do?</button>
       <InfoModal showInfo={showInfo} setShowInfo={setShowInfo}>
       <div>
         <h3>What do the Game Buttons do?</h3>
@@ -101,7 +101,7 @@ function ConwayNav() {
         </ul>
       </div>
       </InfoModal>
-      <Link to="/"><button type="button">
+      <Link to="/"><button type="button" title="Home">
         Home
       </button>
       </Link>

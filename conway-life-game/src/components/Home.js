@@ -14,10 +14,10 @@ const Home = () => {
           </p>
           <p>
             In order to keep building on the concepts I've learned (and remember
-            them), I created a bunch of fun little games.
+            them), I am creating a bunch of fun little games and figuring out how to publish them so y'all can see.
           </p>
           <p>
-            This page started off as the home of my Conway's Game of Life, but I
+            This page started off as the home of my Conway's Game of Life project, but I
             decided to make it a central hub of any game I'm building from here
             on out. I've got the most experience with JavaScript and Python, so
             that's what you'll be seeing the most of. I hope you enjoy!
